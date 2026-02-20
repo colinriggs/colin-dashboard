@@ -91,36 +91,42 @@ export const cronJobs: CronJob[] = [
 
 export const sessions: Session[] = [
   {
-    name: "Main Session",
+    name: "Dashboard Build & Deploy",
     type: "main",
     status: "active",
-    details: "slack",
+    details: "Building Colin Control Center dashboard — Next.js + shadcn, deployed to Vercel",
     model: "claude-opus-4-6",
     tokens: "~73K",
+  },
+  {
+    name: "Vercel + Google Auth",
+    type: "main",
+    status: "completed",
+    details: "Signed into Google Workspace, created Vercel API token, deployed dashboard",
   },
   {
     name: "direct-apply-batch1",
     type: "subagent",
     status: "completed",
-    details: "Job application batch — 1 app submitted, 8 email leads",
+    details: "SimplyHired job search — 1 application submitted (Arkansas Financial), 8 direct email leads collected",
   },
   {
     name: "direct-apply-batch2",
     type: "subagent",
     status: "aborted",
-    details: "Hit context limit",
+    details: "Continuation of job application batch — hit 200K context limit",
   },
   {
     name: "email-check",
     type: "cron",
     status: "completed",
-    details: "Cron session",
+    details: "ProtonMail check — failed, credentials missing from disk",
   },
   {
     name: "morning-digest",
     type: "cron",
     status: "completed",
-    details: "Cron session",
+    details: "Compiled overnight summary and sent to Hardik via Slack",
   },
 ];
 
@@ -139,6 +145,21 @@ export const connectedServices: ConnectedService[] = [
 
 export const activityFeed: ActivityEvent[] = [
   {
+    time: "17:25",
+    description: "Dashboard deployed to Vercel (colin-dashboard.vercel.app)",
+    type: "success",
+  },
+  {
+    time: "17:21",
+    description: "Signed into Google Workspace + created Vercel API token",
+    type: "success",
+  },
+  {
+    time: "15:23",
+    description: "Email check cron failed — ProtonMail credentials missing",
+    type: "error",
+  },
+  {
     time: "15:08",
     description: "Ran claudometer collect (79K input, 11K output tokens)",
     type: "info",
@@ -155,23 +176,13 @@ export const activityFeed: ActivityEvent[] = [
   },
   {
     time: "14:23",
-    description: "direct-apply-batch1 completed (1 job submitted, 8 email leads found)",
+    description: "direct-apply-batch1 completed (1 job submitted, 8 email leads)",
     type: "success",
   },
   {
     time: "09:00",
     description: "Morning digest sent to Slack",
     type: "success",
-  },
-  {
-    time: "07:17",
-    description: "Email check ran at scheduled time — no urgent messages",
-    type: "info",
-  },
-  {
-    time: "00:00",
-    description: "Heartbeat active — system healthy",
-    type: "info",
   },
 ];
 

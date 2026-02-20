@@ -16,7 +16,10 @@ export default function Home() {
         {/* Stats Overview */}
         <StatsBar />
 
-        {/* Top Row: Identity + System Status + Activity */}
+        {/* Top: Recent Sessions/Topics/Tasks */}
+        <Sessions />
+
+        {/* Second Row: Identity + System Status + Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <IdentityCard />
           <SystemStatus />
@@ -26,11 +29,8 @@ export default function Home() {
         {/* Middle: Cron Jobs */}
         <CronJobs />
 
-        {/* Bottom Row: Sessions + Connected Services */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Sessions />
-          <ConnectedServices />
-        </div>
+        {/* Bottom: Connected Services */}
+        <ConnectedServices />
       </main>
       <Footer />
     </div>
