@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useGateway } from "@/hooks/use-gateway";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { SessionDetailDrawer } from "./session-detail-drawer";
 import {
   Layers,
   MessageSquare,
@@ -104,6 +106,8 @@ function timeSince(dateStr?: string): string {
 }
 
 export function SessionsPanel() {
+  const [selectedSession, setSelectedSession] = useState<string | null>(null);
+
   const { data, error, loading, lastUpdated, refresh } =
     useGateway<SessionsResponse>({
       tool: "sessions_list",
@@ -188,7 +192,11 @@ export function SessionsPanel() {
           {sessions.map((session, idx) => (
             <div
               key={session.key || idx}
-              className="group px-3 py-2.5 rounded-md bg-emerald-950/20 border border-emerald-900/15 hover:border-emerald-800/30 hover:bg-emerald-950/30 transition-all"
+              onClick={() => {
+                const key = session.key || session.label;
+                if (key) setSelectedSession(key);
+              }}
+              className="group px-3 py-2.5 rounded-md bg-emerald-950/20 border border-emerald-900/15 hover:border-emerald-800/30 hover:bg-emerald-950/30 transition-all cursor-pointer"
             >
               <div className="flex items-center gap-2 mb-1">
                 {/* Status dot */}
@@ -247,6 +255,12 @@ export function SessionsPanel() {
           ))}
         </div>
       </ScrollArea>
+
+      {/* Session Detail Drawer */}
+      <SessionDetailDrawer
+        sessionKey={selectedSession}
+        onClose={() => setSelectedSession(null)}
+      />
     </div>
   );
 }
