@@ -36,39 +36,30 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#060a06] flex items-center justify-center font-mono relative overflow-hidden">
-      {/* Scanline overlay */}
-      <div
-        className="pointer-events-none fixed inset-0 z-50"
-        style={{
-          background:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.015) 2px, rgba(0,255,0,0.015) 4px)",
-        }}
-      />
-
+    <div className="min-h-screen bg-zinc-950 flex items-center justify-center relative overflow-hidden">
       <div className="w-full max-w-sm px-6">
-        {/* Terminal header */}
+        {/* Header */}
         <div className="text-center mb-8">
-          <div className="text-emerald-500/60 text-xs tracking-[0.3em] mb-2">
-            ▲ COLIN ATC ▲
+          <div className="text-zinc-400 text-sm font-medium mb-1">
+            Colin
           </div>
-          <div className="text-emerald-400 text-lg tracking-widest">
-            TOWER ACCESS
+          <div className="text-zinc-200 text-lg font-semibold">
+            Dashboard
           </div>
-          <div className="mt-3 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+          <div className="mt-3 h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
         </div>
 
         {/* Login form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-emerald-500/50 text-xs tracking-wider mb-2">
-              AUTHORIZATION CODE
+            <label className="block text-zinc-500 text-xs font-medium mb-2">
+              Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-black/60 border border-emerald-500/30 rounded px-4 py-3 text-emerald-400 font-mono text-sm tracking-wider placeholder:text-emerald-500/20 focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+              className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-zinc-200 text-sm placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all"
               placeholder="••••••••"
               autoFocus
               disabled={loading}
@@ -76,27 +67,19 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="text-red-400 text-xs tracking-wider text-center animate-pulse">
-              ⚠ {error}
+            <div className="text-red-400 text-xs text-center">
+              {error}
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading || !password}
-            className="w-full bg-emerald-500/10 border border-emerald-500/30 rounded py-3 text-emerald-400 text-sm tracking-widest hover:bg-emerald-500/20 hover:border-emerald-500/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="w-full bg-blue-600 hover:bg-blue-500 border border-blue-500 rounded-lg py-3 text-white text-sm font-medium disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
-            {loading ? "AUTHENTICATING..." : "ENTER TOWER"}
+            {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
-
-        {/* Footer */}
-        <div className="mt-8 text-center">
-          <div className="h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent mb-4" />
-          <div className="text-emerald-500/20 text-[10px] tracking-widest">
-            AUTHORIZED PERSONNEL ONLY
-          </div>
-        </div>
       </div>
     </div>
   );
