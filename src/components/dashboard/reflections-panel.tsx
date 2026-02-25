@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { callGateway } from "@/lib/gateway";
+import { fetchFile, listFiles } from "@/lib/gateway";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   BookOpen,
@@ -59,14 +59,19 @@ export function ReflectionsPanel() {
     setLoading(true);
     setError("");
     try {
-      const result = await callGateway("exec", {
-        command: "ls -la /Users/colinnr/clawd/reflections/",
-      });
+      const result = await listFiles("reflections");
       if (result.error) {
         setError(result.error);
       } else {
-        const output = extractContent(result.data);
-        setFiles(parseReflectionList(output));
+        const fileList = (result.data?.files || [])
+          .filter((f: string) => f.endsWith(".md"))
+          .map((f: string) => {
+            const match = f.match(/(\d{4}-\d{2}-\d{2})\.md/);
+            return match ? { name: f, date: match[1] } : null;
+          })
+          .filter(Boolean) as ReflectionFile[];
+        fileList.sort((a, b) => b.date.localeCompare(a.date));
+        setFiles(fileList);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -78,13 +83,11 @@ export function ReflectionsPanel() {
     setContentLoading(true);
     setSelectedFile(filename);
     try {
-      const result = await callGateway("exec", {
-        command: `cat "/Users/colinnr/clawd/reflections/${filename}"`,
-      });
+      const result = await fetchFile(`reflections/${filename}`);
       if (result.error) {
         setFileContent(`Error: ${result.error}`);
       } else {
-        setFileContent(extractContent(result.data));
+        setFileContent(result.data?.content || "(empty)");
       }
     } catch (err) {
       setFileContent(

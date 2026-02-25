@@ -67,14 +67,26 @@ export async function runCronJob(jobId: string) {
   return callGateway("cron", { action: "run", jobId });
 }
 
-export async function execCommand(command: string) {
-  return callGateway("exec", { command });
+export async function fetchFile(path: string): Promise<GatewayResponse<{ content: string | null; notFound?: boolean }>> {
+  try {
+    const resp = await fetch(`/api/files?path=${encodeURIComponent(path)}`);
+    const json = await resp.json();
+    if (!resp.ok) return { data: null, error: json.error || `HTTP ${resp.status}` };
+    return { data: json, error: null };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { data: null, error: message };
+  }
 }
 
-export async function fetchFile(path: string) {
-  return execCommand(`cat ${path}`);
-}
-
-export async function listDirectory(path: string) {
-  return execCommand(`ls -la ${path}`);
+export async function listFiles(dir: string): Promise<GatewayResponse<{ files: string[] }>> {
+  try {
+    const resp = await fetch(`/api/files?action=list&dir=${encodeURIComponent(dir)}`);
+    const json = await resp.json();
+    if (!resp.ok) return { data: null, error: json.error || `HTTP ${resp.status}` };
+    return { data: json, error: null };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { data: null, error: message };
+  }
 }

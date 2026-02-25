@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { callGateway } from "@/lib/gateway";
+import { fetchFile } from "@/lib/gateway";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Brain,
@@ -66,14 +66,15 @@ export function MemoryViewer() {
     setLoading((prev) => ({ ...prev, [id]: true }));
     setErrors((prev) => ({ ...prev, [id]: "" }));
     try {
-      const result = await callGateway("exec", {
-        command: `cat "${path}"`,
-      });
+      // Extract relative path from absolute
+      const relativePath = path.replace("/Users/colinnr/clawd/", "");
+      const result = await fetchFile(relativePath);
       if (result.error) {
         setErrors((prev) => ({ ...prev, [id]: result.error! }));
+      } else if (result.data?.notFound) {
+        setContents((prev) => ({ ...prev, [id]: "(file not found)" }));
       } else {
-        const text = extractContent(result.data);
-        setContents((prev) => ({ ...prev, [id]: text }));
+        setContents((prev) => ({ ...prev, [id]: result.data?.content || "" }));
       }
     } catch (err) {
       setErrors((prev) => ({

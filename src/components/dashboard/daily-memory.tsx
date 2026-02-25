@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { callGateway } from "@/lib/gateway";
+import { fetchFile } from "@/lib/gateway";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   NotebookPen,
@@ -51,18 +51,13 @@ export function DailyMemory() {
     setError("");
     setContent("");
     try {
-      const result = await callGateway("exec", {
-        command: `cat "/Users/colinnr/clawd/memory/${dateStr}.md" 2>/dev/null || echo "__NO_FILE__"`,
-      });
+      const result = await fetchFile(`memory/${dateStr}.md`);
       if (result.error) {
         setError(result.error);
+      } else if (result.data?.notFound || !result.data?.content) {
+        setContent("");
       } else {
-        const text = extractContent(result.data);
-        if (text.trim() === "__NO_FILE__") {
-          setContent("");
-        } else {
-          setContent(text);
-        }
+        setContent(result.data.content);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
