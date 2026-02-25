@@ -1,38 +1,38 @@
+"use client";
+
 import { Header } from "@/components/dashboard/header";
-import { StatsBar } from "@/components/dashboard/stats-bar";
-import { IdentityCard } from "@/components/dashboard/identity-card";
-import { SystemStatus } from "@/components/dashboard/system-status";
-import { CronJobs } from "@/components/dashboard/cron-jobs";
-import { Sessions } from "@/components/dashboard/sessions";
-import { ConnectedServices } from "@/components/dashboard/connected-services";
-import { ActivityFeed } from "@/components/dashboard/activity-feed";
-import { Footer } from "@/components/dashboard/footer";
+import { SessionsPanel } from "@/components/dashboard/sessions-panel";
+import { CronPanel } from "@/components/dashboard/cron-panel";
+import { MemoryViewer } from "@/components/dashboard/memory-viewer";
+import { ReflectionsPanel } from "@/components/dashboard/reflections-panel";
+import { DailyMemory } from "@/components/dashboard/daily-memory";
+import { SystemBar } from "@/components/dashboard/system-bar";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#060a06] text-emerald-50 flex flex-col">
       <Header />
-      <main className="container mx-auto px-4 py-6 space-y-6">
-        {/* Stats Overview */}
-        <StatsBar />
 
-        {/* Top: Recent Sessions/Topics/Tasks */}
-        <Sessions />
-
-        {/* Second Row: Identity + System Status + Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <IdentityCard />
-          <SystemStatus />
-          <ActivityFeed />
+      <main className="flex-1 max-w-[1800px] mx-auto w-full px-4 py-4 space-y-4">
+        {/* Row 1: Sessions (primary, wide) + Cron Jobs */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          <div className="lg:col-span-3">
+            <SessionsPanel />
+          </div>
+          <div className="lg:col-span-2">
+            <CronPanel />
+          </div>
         </div>
 
-        {/* Middle: Cron Jobs */}
-        <CronJobs />
-
-        {/* Bottom: Connected Services */}
-        <ConnectedServices />
+        {/* Row 2: Memory Viewer + Daily Log + Reflections */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <MemoryViewer />
+          <DailyMemory />
+          <ReflectionsPanel />
+        </div>
       </main>
-      <Footer />
+
+      <SystemBar />
     </div>
   );
 }
