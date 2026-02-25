@@ -32,12 +32,13 @@ interface MemorySearchResponse {
 function extractResults(data: unknown): MemoryResult[] {
   if (!data) return [];
   const d = data as MemorySearchResponse;
+  // After callGateway unwrap: data = {results: [...], provider, model}
   if (Array.isArray(d.results)) return d.results;
   if (d.result && Array.isArray(d.result.results)) return d.result.results;
   if (typeof d === "object" && d !== null) {
     for (const val of Object.values(d)) {
-      if (Array.isArray(val) && val.length > 0 && val[0]?.path) {
-        return val;
+      if (Array.isArray(val) && val.length > 0 && (val[0] as MemoryResult)?.path) {
+        return val as MemoryResult[];
       }
     }
   }

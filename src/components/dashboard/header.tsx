@@ -110,12 +110,14 @@ export function Header() {
 
   const statusText = useMemo(() => {
     if (!data) return undefined;
-    // session_status may return { text: "..." } or { result: { text: "..." } }
     const d = data as Record<string, unknown>;
+    // After unwrap: {ok, sessionKey, statusText: "..."}
+    if (typeof d.statusText === "string") return d.statusText;
     if (typeof d.text === "string") return d.text;
     if (d.result && typeof (d.result as Record<string, unknown>).text === "string")
       return (d.result as Record<string, unknown>).text as string;
-    // Try the entire data as string
+    if (d.result && typeof (d.result as Record<string, unknown>).statusText === "string")
+      return (d.result as Record<string, unknown>).statusText as string;
     return JSON.stringify(d);
   }, [data]);
 

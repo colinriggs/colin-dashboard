@@ -22,6 +22,26 @@ export async function callGateway<T = unknown>(
       return { data: null, error: json.error || `HTTP ${resp.status}` };
     }
 
+    // Unwrap gateway response: {ok, result: {content: [...], details: {...}}}
+    // Return details if available, otherwise try parsing content text, otherwise return raw
+    if (json?.ok && json?.result) {
+      const { details } = json.result;
+      if (details && typeof details === "object") {
+        return { data: details as T, error: null };
+      }
+      // Fallback: parse content[0].text as JSON
+      const content = json.result.content;
+      if (Array.isArray(content) && content[0]?.text) {
+        try {
+          const parsed = JSON.parse(content[0].text);
+          return { data: parsed as T, error: null };
+        } catch {
+          // Return text as-is
+          return { data: content[0].text as T, error: null };
+        }
+      }
+    }
+
     return { data: json as T, error: null };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
