@@ -18,7 +18,7 @@ import {
 interface SessionMessage {
   role?: string;
   text?: string;
-  content?: string;
+  content?: string | unknown[];
 }
 
 interface SessionEntry {
@@ -35,6 +35,7 @@ interface SessionEntry {
   costStr?: string;
   startedAt?: string;
   lastActiveAt?: string;
+  updatedAt?: number;
   // Allow other fields
   [key: string]: unknown;
 }
@@ -52,12 +53,28 @@ function formatTokens(n?: number): string {
   return String(n);
 }
 
+function extractText(val: unknown): string {
+  if (typeof val === "string") return val;
+  if (Array.isArray(val)) {
+    return val
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item && typeof item === "object" && "text" in item && typeof (item as Record<string, unknown>).text === "string")
+          return (item as Record<string, unknown>).text as string;
+        return "";
+      })
+      .filter(Boolean)
+      .join(" ");
+  }
+  return "";
+}
+
 function getLastMessage(session: SessionEntry): string {
   const msgs = session.messages;
   if (!msgs || msgs.length === 0) return "No messages";
   const last = msgs[msgs.length - 1];
-  const text = last?.text || last?.content || "";
-  if (typeof text === "string") {
+  const text = extractText(last?.text) || extractText(last?.content) || "";
+  if (text) {
     return text.slice(0, 120) + (text.length > 120 ? "…" : "");
   }
   return "…";
@@ -238,9 +255,9 @@ export function SessionsPanel() {
                 {session.costStr && (
                   <span className="text-amber-600/60">{session.costStr}</span>
                 )}
-                {session.lastActiveAt && (
+                {(session.lastActiveAt || session.updatedAt) && (
                   <span className={getStatusColor(session.status)}>
-                    {timeSince(session.lastActiveAt)}
+                    {timeSince(session.lastActiveAt || (session.updatedAt ? new Date(session.updatedAt).toISOString() : undefined))}
                   </span>
                 )}
               </div>

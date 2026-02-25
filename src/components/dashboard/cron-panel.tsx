@@ -33,12 +33,48 @@ interface CronJobEntry {
   jobId?: string;
   name?: string;
   text?: string;
-  schedule?: string;
+  schedule?: string | { kind?: string; expr?: string };
   enabled?: boolean;
   lastRun?: string;
   nextRun?: string;
   model?: string;
+  state?: {
+    nextRunAtMs?: number;
+    lastRunAtMs?: number;
+    lastStatus?: string;
+    lastDurationMs?: number;
+  };
+  payload?: {
+    kind?: string;
+    message?: string;
+    [key: string]: unknown;
+  };
   [key: string]: unknown;
+}
+
+function getScheduleExpr(schedule?: string | { kind?: string; expr?: string }): string {
+  if (!schedule) return "—";
+  if (typeof schedule === "string") return schedule;
+  if (typeof schedule === "object" && schedule.expr) return schedule.expr;
+  return JSON.stringify(schedule);
+}
+
+function getJobText(job: CronJobEntry): string {
+  if (job.text) return job.text;
+  if (job.payload?.message) return job.payload.message;
+  return "";
+}
+
+function getLastRun(job: CronJobEntry): string | undefined {
+  if (job.lastRun) return job.lastRun;
+  if (job.state?.lastRunAtMs) return new Date(job.state.lastRunAtMs).toISOString();
+  return undefined;
+}
+
+function getNextRun(job: CronJobEntry): string | undefined {
+  if (job.nextRun) return job.nextRun;
+  if (job.state?.nextRunAtMs) return new Date(job.state.nextRunAtMs).toISOString();
+  return undefined;
 }
 
 interface CronResponse {
@@ -381,7 +417,7 @@ export function CronPanel() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono text-emerald-200 font-medium truncate">
-                        {job.name || job.text?.slice(0, 40) || id}
+                        {job.name || getJobText(job)?.slice(0, 40) || id}
                       </span>
                       {job.enabled ? (
                         <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 text-[9px] px-1 py-0">
@@ -398,13 +434,13 @@ export function CronPanel() {
                     </div>
                     <div className="flex items-center gap-3 text-[10px] font-mono text-emerald-800 mt-0.5">
                       <code className="text-emerald-600/60">
-                        {job.schedule || "—"}
+                        {getScheduleExpr(job.schedule)}
                       </code>
-                      {job.lastRun && (
-                        <span>last: {formatScheduleTime(job.lastRun)}</span>
+                      {getLastRun(job) && (
+                        <span>last: {formatScheduleTime(getLastRun(job))}</span>
                       )}
-                      {job.nextRun && (
-                        <span>next: {formatScheduleTime(job.nextRun)}</span>
+                      {getNextRun(job) && (
+                        <span>next: {formatScheduleTime(getNextRun(job))}</span>
                       )}
                     </div>
                   </div>
