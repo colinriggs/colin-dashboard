@@ -36,13 +36,11 @@ interface SessionEntry {
   startedAt?: string;
   lastActiveAt?: string;
   updatedAt?: number;
-  // Allow other fields
   [key: string]: unknown;
 }
 
 interface SessionsResponse {
   sessions?: SessionEntry[];
-  // Allow other shapes
   [key: string]: unknown;
 }
 
@@ -94,18 +92,18 @@ function getKindIcon(kind?: string) {
 }
 
 function getStatusColor(status?: string): string {
-  if (!status) return "text-gray-500";
+  if (!status) return "text-zinc-500";
   if (status === "active" || status === "running") return "text-emerald-400";
-  if (status === "completed" || status === "done") return "text-gray-500";
+  if (status === "completed" || status === "done") return "text-zinc-500";
   if (status === "aborted" || status === "error" || status === "failed")
     return "text-red-400";
   return "text-amber-400";
 }
 
 function getStatusDot(status?: string): string {
-  if (!status) return "bg-gray-600";
+  if (!status) return "bg-zinc-600";
   if (status === "active" || status === "running") return "bg-emerald-400";
-  if (status === "completed" || status === "done") return "bg-gray-600";
+  if (status === "completed" || status === "done") return "bg-zinc-600";
   if (status === "aborted" || status === "error" || status === "failed")
     return "bg-red-400";
   return "bg-amber-400";
@@ -132,7 +130,6 @@ export function SessionsPanel() {
       pollInterval: 30_000,
     });
 
-  // Extract sessions array from response - handle various response shapes
   let sessions: SessionEntry[] = [];
   if (data) {
     if (Array.isArray(data)) {
@@ -140,7 +137,6 @@ export function SessionsPanel() {
     } else if (Array.isArray((data as SessionsResponse).sessions)) {
       sessions = (data as SessionsResponse).sessions!;
     } else if (typeof data === "object") {
-      // Try to find any array in the response
       for (const val of Object.values(data)) {
         if (Array.isArray(val)) {
           sessions = val;
@@ -155,12 +151,12 @@ export function SessionsPanel() {
   ).length;
 
   return (
-    <div className="rounded-lg border border-emerald-900/30 bg-[#0c120c] overflow-hidden">
+    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-emerald-950/30 border-b border-emerald-900/20">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <CircleDot className="h-4 w-4 text-emerald-500" />
-          <span className="text-sm font-mono font-bold text-emerald-300 uppercase tracking-wide">
+          <span className="text-sm font-semibold text-zinc-200">
             Active Sessions
           </span>
           {activeCount > 0 && (
@@ -171,13 +167,13 @@ export function SessionsPanel() {
         </div>
         <div className="flex items-center gap-3">
           {lastUpdated && (
-            <span className="text-[10px] text-emerald-700 font-mono">
+            <span className="text-[10px] text-zinc-500 font-mono">
               {lastUpdated.toLocaleTimeString()}
             </span>
           )}
           <button
             onClick={refresh}
-            className="text-emerald-600 hover:text-emerald-400 transition-colors"
+            className="text-zinc-500 hover:text-zinc-300 transition-colors"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
           </button>
@@ -188,20 +184,20 @@ export function SessionsPanel() {
       <ScrollArea className="h-[400px]">
         <div className="p-3 space-y-1.5">
           {loading && sessions.length === 0 && (
-            <div className="flex items-center justify-center py-12 text-emerald-700">
+            <div className="flex items-center justify-center py-12 text-zinc-500">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
-              <span className="text-sm font-mono">Loading sessions…</span>
+              <span className="text-sm">Loading sessions…</span>
             </div>
           )}
 
           {error && sessions.length === 0 && (
-            <div className="text-center py-8 text-red-500/70 text-sm font-mono">
+            <div className="text-center py-8 text-red-500/70 text-sm">
               ⚠ {error}
             </div>
           )}
 
           {sessions.length === 0 && !loading && !error && (
-            <div className="text-center py-8 text-emerald-800 text-sm font-mono">
+            <div className="text-center py-8 text-zinc-500 text-sm">
               No active sessions
             </div>
           )}
@@ -213,7 +209,7 @@ export function SessionsPanel() {
                 const key = session.key || session.label;
                 if (key) setSelectedSession(key);
               }}
-              className="group px-3 py-2.5 rounded-md bg-emerald-950/20 border border-emerald-900/15 hover:border-emerald-800/30 hover:bg-emerald-950/30 transition-all cursor-pointer"
+              className="group px-3 py-2.5 rounded-md bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/50 transition-all cursor-pointer"
             >
               <div className="flex items-center gap-2 mb-1">
                 {/* Status dot */}
@@ -228,12 +224,12 @@ export function SessionsPanel() {
                 />
 
                 {/* Session key */}
-                <span className="text-sm font-mono text-emerald-200 font-medium truncate flex-1">
+                <span className="text-sm font-mono text-zinc-200 font-medium truncate flex-1">
                   {session.key || session.label || `Session ${idx + 1}`}
                 </span>
 
                 {/* Kind badge */}
-                <div className="flex items-center gap-1 text-emerald-600">
+                <div className="flex items-center gap-1 text-zinc-500">
                   {getKindIcon(session.kind)}
                   <span className="text-[10px] font-mono uppercase">
                     {session.kind || "unknown"}
@@ -242,9 +238,9 @@ export function SessionsPanel() {
               </div>
 
               {/* Details row */}
-              <div className="flex items-center gap-3 text-[11px] font-mono text-emerald-700 ml-4">
+              <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-500 ml-4">
                 {session.model && (
-                  <span className="text-emerald-500/60">{session.model}</span>
+                  <span className="text-zinc-400/60">{session.model}</span>
                 )}
                 {(session.inputTokens || session.totalTokens) && (
                   <span>
@@ -253,7 +249,7 @@ export function SessionsPanel() {
                   </span>
                 )}
                 {session.costStr && (
-                  <span className="text-amber-600/60">{session.costStr}</span>
+                  <span className="text-amber-500/60">{session.costStr}</span>
                 )}
                 {(session.lastActiveAt || session.updatedAt) && (
                   <span className={getStatusColor(session.status)}>
@@ -264,7 +260,7 @@ export function SessionsPanel() {
 
               {/* Last message preview */}
               {session.messages && session.messages.length > 0 && (
-                <div className="mt-1.5 ml-4 text-[11px] text-emerald-800 font-mono truncate">
+                <div className="mt-1.5 ml-4 text-[11px] text-zinc-500 font-mono truncate">
                   › {getLastMessage(session)}
                 </div>
               )}

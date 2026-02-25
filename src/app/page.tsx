@@ -12,7 +12,7 @@ import { SystemBar } from "@/components/dashboard/system-bar";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#060a06] text-emerald-50 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
       <Header />
 
       <main className="flex-1 max-w-[1800px] mx-auto w-full px-4 py-4 space-y-4">

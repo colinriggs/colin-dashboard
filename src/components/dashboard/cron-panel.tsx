@@ -156,12 +156,10 @@ export function CronPanel() {
   const [newJobModel, setNewJobModel] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
-  // Cron run history state
   const [expandedJobs, setExpandedJobs] = useState<Record<string, boolean>>({});
   const [jobRuns, setJobRuns] = useState<Record<string, CronRunEntry[]>>({});
   const [runsLoading, setRunsLoading] = useState<Record<string, boolean>>({});
 
-  // Extract jobs from response
   let jobs: CronJobEntry[] = [];
   if (data) {
     if (Array.isArray(data)) {
@@ -246,7 +244,6 @@ export function CronPanel() {
         return;
       }
 
-      // Expand and load runs
       setExpandedJobs((prev) => ({ ...prev, [id]: true }));
 
       if (!jobRuns[id]) {
@@ -272,12 +269,12 @@ export function CronPanel() {
   );
 
   return (
-    <div className="rounded-lg border border-emerald-900/30 bg-[#0c120c] overflow-hidden">
+    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-emerald-950/30 border-b border-emerald-900/20">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <Timer className="h-4 w-4 text-amber-500" />
-          <span className="text-sm font-mono font-bold text-emerald-300 uppercase tracking-wide">
+          <span className="text-sm font-semibold text-zinc-200">
             Cron Jobs
           </span>
           <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-[10px] px-1.5 py-0">
@@ -287,7 +284,7 @@ export function CronPanel() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="text-emerald-600 hover:text-emerald-400 transition-colors p-1"
+            className="text-zinc-500 hover:text-zinc-300 transition-colors p-1"
             title="Add cron job"
           >
             {showAddForm ? (
@@ -297,13 +294,13 @@ export function CronPanel() {
             )}
           </button>
           {lastUpdated && (
-            <span className="text-[10px] text-emerald-700 font-mono">
+            <span className="text-[10px] text-zinc-500 font-mono">
               {lastUpdated.toLocaleTimeString()}
             </span>
           )}
           <button
             onClick={refresh}
-            className="text-emerald-600 hover:text-emerald-400 transition-colors"
+            className="text-zinc-500 hover:text-zinc-300 transition-colors"
           >
             <RefreshCw
               className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`}
@@ -314,13 +311,13 @@ export function CronPanel() {
 
       {/* Add Form */}
       {showAddForm && (
-        <div className="px-4 py-3 bg-emerald-950/20 border-b border-emerald-900/20 space-y-2">
+        <div className="px-4 py-3 bg-zinc-800/30 border-b border-zinc-800 space-y-2">
           <input
             type="text"
             placeholder="Job text / prompt…"
             value={newJobText}
             onChange={(e) => setNewJobText(e.target.value)}
-            className="w-full bg-[#0a0f0a] border border-emerald-900/30 rounded px-3 py-1.5 text-xs font-mono text-emerald-200 placeholder:text-emerald-800 focus:outline-none focus:border-emerald-700"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600"
           />
           <div className="flex gap-2">
             <input
@@ -328,14 +325,14 @@ export function CronPanel() {
               placeholder="Schedule (cron or natural)"
               value={newJobSchedule}
               onChange={(e) => setNewJobSchedule(e.target.value)}
-              className="flex-1 bg-[#0a0f0a] border border-emerald-900/30 rounded px-3 py-1.5 text-xs font-mono text-emerald-200 placeholder:text-emerald-800 focus:outline-none focus:border-emerald-700"
+              className="flex-1 bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600"
             />
             <input
               type="text"
               placeholder="Model (optional)"
               value={newJobModel}
               onChange={(e) => setNewJobModel(e.target.value)}
-              className="w-40 bg-[#0a0f0a] border border-emerald-900/30 rounded px-3 py-1.5 text-xs font-mono text-emerald-200 placeholder:text-emerald-800 focus:outline-none focus:border-emerald-700"
+              className="w-40 bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600"
             />
             <button
               onClick={handleAddJob}
@@ -344,12 +341,12 @@ export function CronPanel() {
                 !newJobSchedule.trim() ||
                 actionLoading === "__add__"
               }
-              className="px-3 py-1.5 bg-emerald-800/30 border border-emerald-700/30 rounded text-xs font-mono text-emerald-400 hover:bg-emerald-800/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="px-3 py-1.5 bg-blue-600/20 border border-blue-500/30 rounded text-xs font-medium text-blue-400 hover:bg-blue-600/30 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               {actionLoading === "__add__" ? (
                 <Loader2 className="h-3 w-3 animate-spin" />
               ) : (
-                "ADD"
+                "Add"
               )}
             </button>
           </div>
@@ -357,17 +354,17 @@ export function CronPanel() {
       )}
 
       {/* Content */}
-      <ScrollArea className="h-[350px]">
+      <ScrollArea className="h-[400px]">
         <div className="p-2">
           {loading && jobs.length === 0 && (
-            <div className="flex items-center justify-center py-12 text-emerald-700">
+            <div className="flex items-center justify-center py-12 text-zinc-500">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
-              <span className="text-sm font-mono">Loading cron jobs…</span>
+              <span className="text-sm">Loading cron jobs…</span>
             </div>
           )}
 
           {error && jobs.length === 0 && (
-            <div className="text-center py-8 text-red-500/70 text-sm font-mono">
+            <div className="text-center py-8 text-red-500/70 text-sm">
               ⚠ {error}
             </div>
           )}
@@ -382,7 +379,7 @@ export function CronPanel() {
             return (
               <div key={id || idx} className="mb-1">
                 <div
-                  className={`group flex items-center gap-3 px-3 py-2 rounded-md hover:bg-emerald-950/30 transition-all ${
+                  className={`group flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-800/50 transition-all ${
                     job.enabled ? "" : "opacity-50"
                   }`}
                 >
@@ -396,14 +393,14 @@ export function CronPanel() {
                     {job.enabled ? (
                       <Play className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400" />
                     ) : (
-                      <Pause className="h-3.5 w-3.5 text-gray-600" />
+                      <Pause className="h-3.5 w-3.5 text-zinc-600" />
                     )}
                   </button>
 
                   {/* Expand/collapse for run history */}
                   <button
                     onClick={() => toggleRunHistory(job)}
-                    className="shrink-0 text-emerald-700 hover:text-emerald-400 transition-colors"
+                    className="shrink-0 text-zinc-500 hover:text-zinc-300 transition-colors"
                     title="Show run history"
                   >
                     {isExpanded ? (
@@ -416,7 +413,7 @@ export function CronPanel() {
                   {/* Job info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-emerald-200 font-medium truncate">
+                      <span className="text-xs text-zinc-200 font-medium truncate">
                         {job.name || getJobText(job)?.slice(0, 40) || id}
                       </span>
                       {job.enabled ? (
@@ -426,14 +423,14 @@ export function CronPanel() {
                       ) : (
                         <Badge
                           variant="outline"
-                          className="text-gray-600 border-gray-800 text-[9px] px-1 py-0"
+                          className="text-zinc-600 border-zinc-700 text-[9px] px-1 py-0"
                         >
                           OFF
                         </Badge>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-[10px] font-mono text-emerald-800 mt-0.5">
-                      <code className="text-emerald-600/60">
+                    <div className="flex items-center gap-3 text-[10px] font-mono text-zinc-500 mt-0.5">
+                      <code className="text-zinc-400/60">
                         {getScheduleExpr(job.schedule)}
                       </code>
                       {getLastRun(job) && (
@@ -474,28 +471,28 @@ export function CronPanel() {
                   </div>
 
                   {isLoading && (
-                    <Loader2 className="h-3 w-3 animate-spin text-emerald-600 shrink-0" />
+                    <Loader2 className="h-3 w-3 animate-spin text-zinc-500 shrink-0" />
                   )}
                 </div>
 
                 {/* Run History (expandable) */}
                 {isExpanded && (
-                  <div className="ml-10 mr-3 mb-2 mt-1 rounded-md bg-[#060a06] border border-emerald-900/20 overflow-hidden">
-                    <div className="px-3 py-1.5 bg-emerald-950/30 border-b border-emerald-900/15">
-                      <span className="text-[10px] font-mono text-emerald-600 uppercase tracking-wider">
+                  <div className="ml-10 mr-3 mb-2 mt-1 rounded-md bg-zinc-950 border border-zinc-800 overflow-hidden">
+                    <div className="px-3 py-1.5 bg-zinc-800/50 border-b border-zinc-800">
+                      <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
                         Recent Runs
                       </span>
                     </div>
 
                     {isRunsLoading && (
-                      <div className="flex items-center justify-center py-4 text-emerald-700">
+                      <div className="flex items-center justify-center py-4 text-zinc-500">
                         <Loader2 className="h-3 w-3 animate-spin mr-1.5" />
-                        <span className="text-[10px] font-mono">Loading…</span>
+                        <span className="text-[10px]">Loading…</span>
                       </div>
                     )}
 
                     {!isRunsLoading && runs.length === 0 && (
-                      <div className="text-center py-3 text-emerald-800 text-[10px] font-mono">
+                      <div className="text-center py-3 text-zinc-600 text-[10px]">
                         No runs found
                       </div>
                     )}
@@ -515,9 +512,8 @@ export function CronPanel() {
                         return (
                           <div
                             key={run.id || run.runId || runIdx}
-                            className="flex items-center gap-2 px-3 py-1.5 border-b border-emerald-900/10 last:border-b-0"
+                            className="flex items-center gap-2 px-3 py-1.5 border-b border-zinc-800/50 last:border-b-0"
                           >
-                            {/* Status icon */}
                             {isSuccess ? (
                               <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />
                             ) : isFailure ? (
@@ -526,14 +522,12 @@ export function CronPanel() {
                               <Clock className="h-3 w-3 text-amber-500 shrink-0" />
                             )}
 
-                            {/* Time */}
-                            <span className="text-[10px] font-mono text-emerald-500/70 flex-1">
+                            <span className="text-[10px] font-mono text-zinc-400 flex-1">
                               {formatScheduleTime(
                                 run.startedAt || run.completedAt
                               )}
                             </span>
 
-                            {/* Status */}
                             <span
                               className={`text-[10px] font-mono uppercase ${
                                 isSuccess
@@ -546,9 +540,8 @@ export function CronPanel() {
                               {run.status || "—"}
                             </span>
 
-                            {/* Duration */}
                             {dur && (
-                              <span className="text-[10px] font-mono text-emerald-700">
+                              <span className="text-[10px] font-mono text-zinc-500">
                                 {formatDuration(
                                   typeof dur === "number" ? dur : undefined
                                 )}

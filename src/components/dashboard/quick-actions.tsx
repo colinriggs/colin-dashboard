@@ -42,7 +42,6 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
     pollInterval: 120_000,
   });
 
-  // Extract jobs
   let jobs: CronJobEntry[] = [];
   if (data) {
     if (Array.isArray(data)) {
@@ -59,7 +58,6 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
     }
   }
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (
@@ -86,28 +84,27 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
 
   const handleRefreshAll = useCallback(() => {
     if (onRefreshAll) onRefreshAll();
-    // Also dispatch a global refresh event
     window.dispatchEvent(new Event("dashboard-refresh-all"));
   }, [onRefreshAll]);
 
   return (
-    <div className="rounded-lg border border-emerald-900/30 bg-[#0a0f0a] overflow-visible">
+    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-visible">
       <div className="flex items-center gap-2 px-4 py-2.5">
         {/* Label */}
         <div className="flex items-center gap-1.5 mr-2">
-          <Terminal className="h-3.5 w-3.5 text-emerald-600" />
-          <span className="text-[11px] font-mono font-bold text-emerald-500 uppercase tracking-wider">
+          <Terminal className="h-3.5 w-3.5 text-zinc-500" />
+          <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">
             Quick Actions
           </span>
         </div>
 
-        <div className="h-4 w-px bg-emerald-900/30 mx-1" />
+        <div className="h-4 w-px bg-zinc-800 mx-1" />
 
         {/* Run Cron Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setCronDropdownOpen(!cronDropdownOpen)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-950/30 border border-amber-800/30 rounded text-xs font-mono text-amber-400 hover:bg-amber-950/50 hover:border-amber-700/40 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-950/30 border border-amber-800/30 rounded text-xs font-medium text-amber-400 hover:bg-amber-950/50 hover:border-amber-700/40 transition-colors"
           >
             <Zap className="h-3 w-3" />
             Run Cron
@@ -119,15 +116,15 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
           </button>
 
           {cronDropdownOpen && (
-            <div className="absolute top-full left-0 mt-1 w-72 bg-[#0c120c] border border-emerald-900/30 rounded-lg shadow-xl shadow-black/40 z-50 overflow-hidden">
-              <div className="px-3 py-2 bg-emerald-950/30 border-b border-emerald-900/20">
-                <span className="text-[10px] font-mono text-emerald-600 uppercase tracking-wider">
+            <div className="absolute top-full left-0 mt-1 w-72 bg-zinc-900 border border-zinc-800 rounded-lg shadow-xl shadow-black/40 z-50 overflow-hidden">
+              <div className="px-3 py-2 bg-zinc-800/50 border-b border-zinc-800">
+                <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
                   Select Job to Run
                 </span>
               </div>
               <div className="max-h-48 overflow-y-auto">
                 {jobs.length === 0 && (
-                  <div className="px-3 py-4 text-center text-emerald-800 text-[11px] font-mono">
+                  <div className="px-3 py-4 text-center text-zinc-500 text-[11px]">
                     No cron jobs found
                   </div>
                 )}
@@ -139,20 +136,20 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
                       key={id || idx}
                       onClick={() => handleRunCron(id)}
                       disabled={isRunning}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-emerald-950/30 transition-colors border-b border-emerald-900/10 last:border-b-0 disabled:opacity-50"
+                      className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-zinc-800/50 transition-colors border-b border-zinc-800/50 last:border-b-0 disabled:opacity-50"
                     >
                       {isRunning ? (
                         <Loader2 className="h-3 w-3 animate-spin text-amber-500 shrink-0" />
                       ) : (
-                        <Play className="h-3 w-3 text-emerald-600 shrink-0" />
+                        <Play className="h-3 w-3 text-zinc-500 shrink-0" />
                       )}
                       <div className="min-w-0 flex-1">
-                        <span className="text-[11px] font-mono text-emerald-300 block truncate">
+                        <span className="text-[11px] text-zinc-300 block truncate">
                           {job.name || job.text?.slice(0, 40) || id}
                         </span>
                       </div>
                       {!job.enabled && (
-                        <span className="text-[9px] font-mono text-gray-600 shrink-0">
+                        <span className="text-[9px] font-mono text-zinc-600 shrink-0">
                           OFF
                         </span>
                       )}
@@ -167,7 +164,7 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
         {/* Search Memory */}
         <button
           onClick={handleSearchMemory}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-950/30 border border-violet-800/30 rounded text-xs font-mono text-violet-400 hover:bg-violet-950/50 hover:border-violet-700/40 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-950/30 border border-violet-800/30 rounded text-xs font-medium text-violet-400 hover:bg-violet-950/50 hover:border-violet-700/40 transition-colors"
         >
           <Search className="h-3 w-3" />
           Search Memory
@@ -176,7 +173,7 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
         {/* Refresh All */}
         <button
           onClick={handleRefreshAll}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-950/30 border border-emerald-800/30 rounded text-xs font-mono text-emerald-400 hover:bg-emerald-950/50 hover:border-emerald-700/40 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800/50 border border-zinc-700/30 rounded text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:border-zinc-600/40 transition-colors"
         >
           <RefreshCw className="h-3 w-3" />
           Refresh All

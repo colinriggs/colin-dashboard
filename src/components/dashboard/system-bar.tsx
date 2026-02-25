@@ -76,7 +76,7 @@ export function SystemBar() {
   ];
 
   return (
-    <div className="border-t border-emerald-900/30 bg-[#080c08]/80 backdrop-blur-sm">
+    <div className="border-t border-zinc-800 bg-zinc-950/80 backdrop-blur-sm">
       <div className="max-w-[1800px] mx-auto px-4 py-2">
         <div className="flex items-center gap-4 overflow-x-auto">
           {items.map((item) => {
@@ -84,20 +84,19 @@ export function SystemBar() {
             return (
               <div
                 key={item.label}
-                className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-700 whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 text-[11px] text-zinc-500 whitespace-nowrap shrink-0"
               >
-                <Icon className="h-3 w-3 text-emerald-800" />
-                <span className="text-emerald-600">{item.label}:</span>
-                <span className="text-emerald-400/70">{item.value}</span>
+                <Icon className="h-3 w-3 text-zinc-600" />
+                <span className="text-zinc-400">{item.label}:</span>
+                <span className="font-mono text-zinc-300/70">{item.value}</span>
               </div>
             );
           })}
 
-          {/* Token usage if available */}
           {(info.inputTokens || info.totalTokens) && (
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-700 whitespace-nowrap shrink-0 ml-auto">
-              <span className="text-emerald-600">Tokens:</span>
-              <span className="text-emerald-400/70">
+            <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 whitespace-nowrap shrink-0 ml-auto">
+              <span className="text-zinc-400">Tokens:</span>
+              <span className="font-mono text-zinc-300/70">
                 ↓{formatTokens(info.inputTokens)} ↑
                 {formatTokens(info.outputTokens)}
               </span>

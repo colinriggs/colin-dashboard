@@ -11,23 +11,8 @@ import {
   Loader2,
 } from "lucide-react";
 
-function extractContent(data: unknown): string {
-  if (!data) return "";
-  if (typeof data === "string") return data;
-  const obj = data as Record<string, unknown>;
-  if (typeof obj.output === "string") return obj.output;
-  if (typeof obj.stdout === "string") return obj.stdout;
-  if (typeof obj.content === "string") return obj.content;
-  if (typeof obj.result === "string") return obj.result;
-  if (obj.content && typeof obj.content === "object") {
-    const nested = obj.content as Record<string, unknown>;
-    if (typeof nested.output === "string") return nested.output;
-  }
-  return JSON.stringify(data, null, 2);
-}
-
 function formatDate(date: Date): string {
-  return date.toISOString().split("T")[0]; // YYYY-MM-DD
+  return date.toISOString().split("T")[0];
 }
 
 function displayDate(dateStr: string): string {
@@ -78,18 +63,18 @@ export function DailyMemory() {
   const isToday = currentDate === formatDate(new Date());
 
   return (
-    <div className="rounded-lg border border-emerald-900/30 bg-[#0c120c] overflow-hidden">
+    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-emerald-950/30 border-b border-emerald-900/20">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <NotebookPen className="h-4 w-4 text-cyan-400" />
-          <span className="text-sm font-mono font-bold text-emerald-300 uppercase tracking-wide">
+          <span className="text-sm font-semibold text-zinc-200">
             Daily Log
           </span>
         </div>
         <button
           onClick={() => loadDay(currentDate)}
-          className="text-emerald-600 hover:text-emerald-400 transition-colors"
+          className="text-zinc-500 hover:text-zinc-300 transition-colors"
         >
           <RefreshCw
             className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`}
@@ -98,19 +83,19 @@ export function DailyMemory() {
       </div>
 
       {/* Date Navigation */}
-      <div className="flex items-center justify-between px-4 py-2 bg-emerald-950/10 border-b border-emerald-900/15">
+      <div className="flex items-center justify-between px-4 py-2 bg-zinc-800/20 border-b border-zinc-800">
         <button
           onClick={() => goDay(-1)}
-          className="text-emerald-600 hover:text-emerald-400 transition-colors p-1"
+          className="text-zinc-500 hover:text-zinc-300 transition-colors p-1"
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
         <div className="text-center">
-          <span className="text-xs font-mono text-emerald-400">
+          <span className="text-xs font-mono text-zinc-300">
             {displayDate(currentDate)}
           </span>
           {isToday && (
-            <span className="ml-2 text-[10px] text-emerald-600 font-mono">
+            <span className="ml-2 text-[10px] text-zinc-500">
               (today)
             </span>
           )}
@@ -118,7 +103,7 @@ export function DailyMemory() {
         <button
           onClick={() => goDay(1)}
           disabled={isToday}
-          className="text-emerald-600 hover:text-emerald-400 disabled:text-emerald-900 disabled:cursor-not-allowed transition-colors p-1"
+          className="text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors p-1"
         >
           <ChevronRight className="h-4 w-4" />
         </button>
@@ -128,26 +113,26 @@ export function DailyMemory() {
       <ScrollArea className="h-[280px]">
         <div className="p-4">
           {loading && (
-            <div className="flex items-center justify-center py-12 text-emerald-700">
+            <div className="flex items-center justify-center py-12 text-zinc-500">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
-              <span className="text-sm font-mono">Loading…</span>
+              <span className="text-sm">Loading…</span>
             </div>
           )}
 
           {error && (
-            <div className="text-center py-8 text-red-500/70 text-sm font-mono">
+            <div className="text-center py-8 text-red-500/70 text-sm">
               ⚠ {error}
             </div>
           )}
 
           {!loading && !error && !content && (
-            <div className="text-center py-8 text-emerald-800 text-sm font-mono">
+            <div className="text-center py-8 text-zinc-500 text-sm">
               No log for {currentDate}
             </div>
           )}
 
           {!loading && content && (
-            <pre className="text-xs font-mono text-emerald-300/80 whitespace-pre-wrap break-words leading-relaxed">
+            <pre className="text-xs font-mono text-zinc-300/80 whitespace-pre-wrap break-words leading-relaxed">
               {content}
             </pre>
           )}

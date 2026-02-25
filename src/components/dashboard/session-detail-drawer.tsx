@@ -37,7 +37,6 @@ function extractMessages(data: unknown): ChatMessage[] {
   const d = data as SessionHistoryResponse;
   if (Array.isArray(d.messages)) return d.messages;
   if (d.result && Array.isArray(d.result.messages)) return d.result.messages;
-  // Try to find any messages array
   if (typeof d === "object" && d !== null) {
     for (const val of Object.values(d)) {
       if (Array.isArray(val) && val.length > 0 && val[0]?.role) {
@@ -105,18 +104,18 @@ export function SessionDetailDrawer({
       />
 
       {/* Drawer */}
-      <div className="relative w-full max-w-2xl bg-[#080c08] border-l border-emerald-900/30 flex flex-col animate-in slide-in-from-right duration-200">
+      <div className="relative w-full max-w-2xl bg-zinc-950 border-l border-zinc-800 flex flex-col animate-in slide-in-from-right duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-emerald-950/30 border-b border-emerald-900/20">
+        <div className="flex items-center justify-between px-4 py-3 bg-zinc-800/50 border-b border-zinc-800">
           <div className="flex items-center gap-2 min-w-0">
-            <MessageSquare className="h-4 w-4 text-emerald-500 shrink-0" />
-            <span className="text-sm font-mono font-bold text-emerald-300 uppercase tracking-wide truncate">
+            <MessageSquare className="h-4 w-4 text-blue-400 shrink-0" />
+            <span className="text-sm font-semibold text-zinc-200 truncate">
               {sessionKey}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="text-emerald-600 hover:text-emerald-400 transition-colors p-1 shrink-0"
+            className="text-zinc-500 hover:text-zinc-300 transition-colors p-1 shrink-0"
           >
             <X className="h-4 w-4" />
           </button>
@@ -126,22 +125,20 @@ export function SessionDetailDrawer({
         <ScrollArea className="flex-1">
           <div className="p-4 space-y-3">
             {loading && (
-              <div className="flex items-center justify-center py-16 text-emerald-700">
+              <div className="flex items-center justify-center py-16 text-zinc-500">
                 <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                <span className="text-sm font-mono">
-                  Loading history…
-                </span>
+                <span className="text-sm">Loading history…</span>
               </div>
             )}
 
             {error && (
-              <div className="text-center py-8 text-red-500/70 text-sm font-mono">
+              <div className="text-center py-8 text-red-500/70 text-sm">
                 ⚠ {error}
               </div>
             )}
 
             {!loading && !error && messages.length === 0 && (
-              <div className="text-center py-12 text-emerald-800 text-sm font-mono">
+              <div className="text-center py-12 text-zinc-500 text-sm">
                 No messages found
               </div>
             )}
@@ -161,20 +158,20 @@ export function SessionDetailDrawer({
                   <div
                     className={`max-w-[85%] rounded-lg px-3 py-2 ${
                       isUser
-                        ? "bg-emerald-900/40 border border-emerald-800/30"
+                        ? "bg-blue-950/40 border border-blue-800/30"
                         : isAssistant
-                        ? "bg-[#0c120c] border border-emerald-900/20"
+                        ? "bg-zinc-900 border border-zinc-800"
                         : "bg-amber-950/20 border border-amber-900/20"
                     }`}
                   >
                     {/* Role label */}
                     <div
-                      className={`flex items-center gap-1.5 mb-1 text-[10px] font-mono uppercase tracking-wider ${
+                      className={`flex items-center gap-1.5 mb-1 text-[10px] font-medium uppercase tracking-wider ${
                         isUser
-                          ? "text-emerald-500"
+                          ? "text-blue-400"
                           : isAssistant
-                          ? "text-cyan-600"
-                          : "text-amber-600"
+                          ? "text-cyan-500"
+                          : "text-amber-500"
                       }`}
                     >
                       {isUser ? (
@@ -185,7 +182,7 @@ export function SessionDetailDrawer({
                       {msg.role || "system"}
                     </div>
                     {/* Content */}
-                    <pre className="text-xs font-mono text-emerald-200/80 whitespace-pre-wrap break-words leading-relaxed">
+                    <pre className="text-xs font-mono text-zinc-200/80 whitespace-pre-wrap break-words leading-relaxed">
                       {content}
                     </pre>
                   </div>
@@ -193,18 +190,17 @@ export function SessionDetailDrawer({
               );
             })}
 
-            {/* Scroll anchor */}
             {messages.length > 0 && (
               <div className="flex justify-center pt-2">
-                <ChevronDown className="h-3 w-3 text-emerald-900" />
+                <ChevronDown className="h-3 w-3 text-zinc-700" />
               </div>
             )}
           </div>
         </ScrollArea>
 
         {/* Footer */}
-        <div className="px-4 py-2 border-t border-emerald-900/20 bg-emerald-950/20">
-          <span className="text-[10px] font-mono text-emerald-800">
+        <div className="px-4 py-2 border-t border-zinc-800 bg-zinc-800/30">
+          <span className="text-[10px] text-zinc-500">
             {messages.length} message{messages.length !== 1 ? "s" : ""} loaded •
             Last 20 messages (no tool calls)
           </span>
