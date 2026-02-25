@@ -269,12 +269,12 @@ export function CronPanel() {
   );
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-lg border border-th-border bg-th-card overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-th-panel-header border-b border-th-border">
         <div className="flex items-center gap-2">
           <Timer className="h-4 w-4 text-amber-500" />
-          <span className="text-sm font-semibold text-zinc-200">
+          <span className="text-sm font-semibold text-th-text-secondary">
             Cron Jobs
           </span>
           <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-[10px] px-1.5 py-0">
@@ -284,7 +284,7 @@ export function CronPanel() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="text-zinc-500 hover:text-zinc-300 transition-colors p-1"
+            className="text-th-text-faint hover:text-th-text-secondary transition-colors p-1"
             title="Add cron job"
           >
             {showAddForm ? (
@@ -294,13 +294,13 @@ export function CronPanel() {
             )}
           </button>
           {lastUpdated && (
-            <span className="text-[10px] text-zinc-500 font-mono">
+            <span className="text-[10px] text-th-text-faint font-mono">
               {lastUpdated.toLocaleTimeString()}
             </span>
           )}
           <button
             onClick={refresh}
-            className="text-zinc-500 hover:text-zinc-300 transition-colors"
+            className="text-th-text-faint hover:text-th-text-secondary transition-colors"
           >
             <RefreshCw
               className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`}
@@ -311,13 +311,13 @@ export function CronPanel() {
 
       {/* Add Form */}
       {showAddForm && (
-        <div className="px-4 py-3 bg-zinc-800/30 border-b border-zinc-800 space-y-2">
+        <div className="px-4 py-3 bg-th-hover border-b border-th-border space-y-2">
           <input
             type="text"
             placeholder="Job text / prompt…"
             value={newJobText}
             onChange={(e) => setNewJobText(e.target.value)}
-            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600"
+            className="w-full bg-th-input-bg border border-th-input-border rounded px-3 py-1.5 text-xs font-mono text-th-text-secondary placeholder:text-th-text-faint focus:outline-none focus:border-th-text-muted"
           />
           <div className="flex gap-2">
             <input
@@ -325,14 +325,14 @@ export function CronPanel() {
               placeholder="Schedule (cron or natural)"
               value={newJobSchedule}
               onChange={(e) => setNewJobSchedule(e.target.value)}
-              className="flex-1 bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="flex-1 bg-th-input-bg border border-th-input-border rounded px-3 py-1.5 text-xs font-mono text-th-text-secondary placeholder:text-th-text-faint focus:outline-none focus:border-th-text-muted"
             />
             <input
               type="text"
               placeholder="Model (optional)"
               value={newJobModel}
               onChange={(e) => setNewJobModel(e.target.value)}
-              className="w-40 bg-zinc-950 border border-zinc-800 rounded px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-40 bg-th-input-bg border border-th-input-border rounded px-3 py-1.5 text-xs font-mono text-th-text-secondary placeholder:text-th-text-faint focus:outline-none focus:border-th-text-muted"
             />
             <button
               onClick={handleAddJob}
@@ -341,7 +341,7 @@ export function CronPanel() {
                 !newJobSchedule.trim() ||
                 actionLoading === "__add__"
               }
-              className="px-3 py-1.5 bg-blue-600/20 border border-blue-500/30 rounded text-xs font-medium text-blue-400 hover:bg-blue-600/30 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="px-3 py-1.5 bg-th-accent-bg border border-th-accent-border rounded text-xs font-medium text-th-accent hover:bg-th-accent/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               {actionLoading === "__add__" ? (
                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -357,7 +357,7 @@ export function CronPanel() {
       <ScrollArea className="h-[400px]">
         <div className="p-2">
           {loading && jobs.length === 0 && (
-            <div className="flex items-center justify-center py-12 text-zinc-500">
+            <div className="flex items-center justify-center py-12 text-th-text-faint">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
               <span className="text-sm">Loading cron jobs…</span>
             </div>
@@ -379,7 +379,7 @@ export function CronPanel() {
             return (
               <div key={id || idx} className="mb-1">
                 <div
-                  className={`group flex items-center gap-3 px-3 py-2 rounded-md hover:bg-zinc-800/50 transition-all ${
+                  className={`group flex items-center gap-3 px-3 py-2 rounded-md hover:bg-th-hover transition-all ${
                     job.enabled ? "" : "opacity-50"
                   }`}
                 >
@@ -393,14 +393,14 @@ export function CronPanel() {
                     {job.enabled ? (
                       <Play className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400" />
                     ) : (
-                      <Pause className="h-3.5 w-3.5 text-zinc-600" />
+                      <Pause className="h-3.5 w-3.5 text-th-icon-muted" />
                     )}
                   </button>
 
                   {/* Expand/collapse for run history */}
                   <button
                     onClick={() => toggleRunHistory(job)}
-                    className="shrink-0 text-zinc-500 hover:text-zinc-300 transition-colors"
+                    className="shrink-0 text-th-text-faint hover:text-th-text-secondary transition-colors"
                     title="Show run history"
                   >
                     {isExpanded ? (
@@ -413,7 +413,7 @@ export function CronPanel() {
                   {/* Job info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-zinc-200 font-medium truncate">
+                      <span className="text-xs text-th-text-secondary font-medium truncate">
                         {job.name || getJobText(job)?.slice(0, 40) || id}
                       </span>
                       {job.enabled ? (
@@ -423,14 +423,14 @@ export function CronPanel() {
                       ) : (
                         <Badge
                           variant="outline"
-                          className="text-zinc-600 border-zinc-700 text-[9px] px-1 py-0"
+                          className="text-th-icon-muted border-th-border text-[9px] px-1 py-0"
                         >
                           OFF
                         </Badge>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-[10px] font-mono text-zinc-500 mt-0.5">
-                      <code className="text-zinc-400/60">
+                    <div className="flex items-center gap-3 text-[10px] font-mono text-th-text-faint mt-0.5">
+                      <code className="text-th-text-muted/60">
                         {getScheduleExpr(job.schedule)}
                       </code>
                       {getLastRun(job) && (
@@ -471,28 +471,28 @@ export function CronPanel() {
                   </div>
 
                   {isLoading && (
-                    <Loader2 className="h-3 w-3 animate-spin text-zinc-500 shrink-0" />
+                    <Loader2 className="h-3 w-3 animate-spin text-th-text-faint shrink-0" />
                   )}
                 </div>
 
                 {/* Run History (expandable) */}
                 {isExpanded && (
-                  <div className="ml-10 mr-3 mb-2 mt-1 rounded-md bg-zinc-950 border border-zinc-800 overflow-hidden">
-                    <div className="px-3 py-1.5 bg-zinc-800/50 border-b border-zinc-800">
-                      <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
+                  <div className="ml-10 mr-3 mb-2 mt-1 rounded-md bg-th-bg border border-th-border overflow-hidden">
+                    <div className="px-3 py-1.5 bg-th-panel-header border-b border-th-border">
+                      <span className="text-[10px] font-medium text-th-text-muted uppercase tracking-wider">
                         Recent Runs
                       </span>
                     </div>
 
                     {isRunsLoading && (
-                      <div className="flex items-center justify-center py-4 text-zinc-500">
+                      <div className="flex items-center justify-center py-4 text-th-text-faint">
                         <Loader2 className="h-3 w-3 animate-spin mr-1.5" />
                         <span className="text-[10px]">Loading…</span>
                       </div>
                     )}
 
                     {!isRunsLoading && runs.length === 0 && (
-                      <div className="text-center py-3 text-zinc-600 text-[10px]">
+                      <div className="text-center py-3 text-th-icon-muted text-[10px]">
                         No runs found
                       </div>
                     )}
@@ -512,7 +512,7 @@ export function CronPanel() {
                         return (
                           <div
                             key={run.id || run.runId || runIdx}
-                            className="flex items-center gap-2 px-3 py-1.5 border-b border-zinc-800/50 last:border-b-0"
+                            className="flex items-center gap-2 px-3 py-1.5 border-b border-th-border-subtle last:border-b-0"
                           >
                             {isSuccess ? (
                               <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />
@@ -522,7 +522,7 @@ export function CronPanel() {
                               <Clock className="h-3 w-3 text-amber-500 shrink-0" />
                             )}
 
-                            <span className="text-[10px] font-mono text-zinc-400 flex-1">
+                            <span className="text-[10px] font-mono text-th-text-muted flex-1">
                               {formatScheduleTime(
                                 run.startedAt || run.completedAt
                               )}
@@ -541,7 +541,7 @@ export function CronPanel() {
                             </span>
 
                             {dur && (
-                              <span className="text-[10px] font-mono text-zinc-500">
+                              <span className="text-[10px] font-mono text-th-text-faint">
                                 {formatDuration(
                                   typeof dur === "number" ? dur : undefined
                                 )}

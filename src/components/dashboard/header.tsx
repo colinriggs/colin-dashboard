@@ -1,6 +1,7 @@
 "use client";
 
 import { useGateway } from "@/hooks/use-gateway";
+import { useTheme, THEMES, THEME_META } from "@/lib/theme";
 import {
   Activity,
   Cpu,
@@ -84,6 +85,7 @@ export function Header() {
     pollInterval: 30_000,
   });
 
+  const { theme, setTheme } = useTheme();
   const [uptime, setUptime] = useState("—");
   const connected = !error;
 
@@ -127,17 +129,17 @@ export function Header() {
   const tokenInfo = useMemo(() => parseTokens(statusText), [statusText]);
 
   return (
-    <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b border-th-border bg-th-bg-secondary backdrop-blur-sm sticky top-0 z-50">
       <div className="max-w-[1800px] mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Left: Identity */}
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700/50 flex items-center justify-center">
-                <Radio className="h-5 w-5 text-blue-400" />
+              <div className="w-10 h-10 rounded-lg bg-th-card border border-th-border-subtle flex items-center justify-center">
+                <Radio className="h-5 w-5 text-th-accent" />
               </div>
               <span
-                className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-zinc-950 ${
+                className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-th-bg ${
                   connected
                     ? "bg-emerald-400 animate-pulse-glow"
                     : "bg-red-500"
@@ -145,10 +147,10 @@ export function Header() {
               />
             </div>
             <div>
-              <h1 className="text-lg font-semibold tracking-tight text-zinc-50">
+              <h1 className="text-lg font-semibold tracking-tight text-th-text">
                 Colin
               </h1>
-              <p className="text-[11px] text-zinc-500 tracking-wide">
+              <p className="text-[11px] text-th-text-faint tracking-wide">
                 Dashboard
               </p>
             </div>
@@ -156,11 +158,11 @@ export function Header() {
 
           {/* Center: Status indicators + Context Gauge */}
           <div className="hidden md:flex items-center gap-5 text-xs">
-            <div className="flex items-center gap-1.5 text-zinc-400">
+            <div className="flex items-center gap-1.5 text-th-text-muted">
               <Cpu className="h-3.5 w-3.5" />
               <span className="font-mono">{model}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-zinc-400">
+            <div className="flex items-center gap-1.5 text-th-text-muted">
               <Activity className="h-3.5 w-3.5" />
               <span className="font-mono">UP {uptime}</span>
             </div>
@@ -174,7 +176,7 @@ export function Header() {
                   )}`}
                 />
                 <div className="flex items-center gap-1.5">
-                  <div className="w-24 h-2 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700/30">
+                  <div className="w-24 h-2 bg-th-border rounded-full overflow-hidden border border-th-border-subtle">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${getGaugeColor(
                         contextInfo.percentage
@@ -203,7 +205,7 @@ export function Header() {
 
             {/* Tokens */}
             {tokenInfo && (
-              <div className="flex items-center gap-1.5 text-zinc-400">
+              <div className="flex items-center gap-1.5 text-th-text-muted">
                 <ArrowDownUp className="h-3.5 w-3.5" />
                 <span className="font-mono">
                   ↓{tokenInfo.input} ↑{tokenInfo.output}
@@ -212,25 +214,45 @@ export function Header() {
             )}
           </div>
 
-          {/* Right: Connection status */}
-          <div
-            className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium ${
-              connected
-                ? "bg-emerald-950/40 border border-emerald-800/30 text-emerald-400"
-                : "bg-red-950/40 border border-red-800/30 text-red-400"
-            }`}
-          >
-            {connected ? (
-              <>
-                <Wifi className="h-3.5 w-3.5" />
-                <span>Connected</span>
-              </>
-            ) : (
-              <>
-                <WifiOff className="h-3.5 w-3.5" />
-                <span>Offline</span>
-              </>
-            )}
+          {/* Right: Theme Switcher + Connection Status */}
+          <div className="flex items-center gap-3">
+            {/* Theme Switcher */}
+            <div className="flex items-center gap-1 p-1 rounded-md bg-th-card border border-th-border-subtle">
+              {THEMES.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTheme(t)}
+                  className={`w-5 h-5 rounded-full border-2 transition-all ${
+                    theme === t
+                      ? "border-th-text scale-110 shadow-sm"
+                      : "border-transparent hover:border-th-text-faint opacity-60 hover:opacity-100"
+                  }`}
+                  style={{ backgroundColor: THEME_META[t].color }}
+                  title={THEME_META[t].label}
+                />
+              ))}
+            </div>
+
+            {/* Connection status */}
+            <div
+              className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium ${
+                connected
+                  ? "bg-emerald-950/40 border border-emerald-800/30 text-emerald-400"
+                  : "bg-red-950/40 border border-red-800/30 text-red-400"
+              }`}
+            >
+              {connected ? (
+                <>
+                  <Wifi className="h-3.5 w-3.5" />
+                  <span>Connected</span>
+                </>
+              ) : (
+                <>
+                  <WifiOff className="h-3.5 w-3.5" />
+                  <span>Offline</span>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

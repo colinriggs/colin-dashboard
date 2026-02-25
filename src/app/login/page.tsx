@@ -36,30 +36,30 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-th-bg flex items-center justify-center relative overflow-hidden">
       <div className="w-full max-w-sm px-6">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="text-zinc-400 text-sm font-medium mb-1">
+          <div className="text-th-text-muted text-sm font-medium mb-1">
             Colin
           </div>
-          <div className="text-zinc-200 text-lg font-semibold">
+          <div className="text-th-text-secondary text-lg font-semibold">
             Dashboard
           </div>
-          <div className="mt-3 h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
+          <div className="mt-3 h-px bg-gradient-to-r from-transparent via-th-border to-transparent" />
         </div>
 
         {/* Login form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-zinc-500 text-xs font-medium mb-2">
+            <label className="block text-th-text-faint text-xs font-medium mb-2">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-zinc-200 text-sm placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all"
+              className="w-full bg-th-card border border-th-border rounded-lg px-4 py-3 text-th-text-secondary text-sm placeholder:text-th-text-faint focus:outline-none focus:border-th-accent focus:ring-1 focus:ring-th-accent-border transition-all"
               placeholder="••••••••"
               autoFocus
               disabled={loading}
@@ -75,7 +75,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading || !password}
-            className="w-full bg-blue-600 hover:bg-blue-500 border border-blue-500 rounded-lg py-3 text-white text-sm font-medium disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="w-full bg-th-accent hover:opacity-90 border border-th-accent-border rounded-lg py-3 text-white text-sm font-medium disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>

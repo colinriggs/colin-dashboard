@@ -104,18 +104,18 @@ export function SessionDetailDrawer({
       />
 
       {/* Drawer */}
-      <div className="relative w-full max-w-2xl bg-zinc-950 border-l border-zinc-800 flex flex-col animate-in slide-in-from-right duration-200">
+      <div className="relative w-full max-w-2xl bg-th-bg border-l border-th-border flex flex-col animate-in slide-in-from-right duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-zinc-800/50 border-b border-zinc-800">
+        <div className="flex items-center justify-between px-4 py-3 bg-th-panel-header border-b border-th-border">
           <div className="flex items-center gap-2 min-w-0">
-            <MessageSquare className="h-4 w-4 text-blue-400 shrink-0" />
-            <span className="text-sm font-semibold text-zinc-200 truncate">
+            <MessageSquare className="h-4 w-4 text-th-accent shrink-0" />
+            <span className="text-sm font-semibold text-th-text-secondary truncate">
               {sessionKey}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="text-zinc-500 hover:text-zinc-300 transition-colors p-1 shrink-0"
+            className="text-th-text-faint hover:text-th-text-secondary transition-colors p-1 shrink-0"
           >
             <X className="h-4 w-4" />
           </button>
@@ -125,7 +125,7 @@ export function SessionDetailDrawer({
         <ScrollArea className="flex-1">
           <div className="p-4 space-y-3">
             {loading && (
-              <div className="flex items-center justify-center py-16 text-zinc-500">
+              <div className="flex items-center justify-center py-16 text-th-text-faint">
                 <Loader2 className="h-5 w-5 animate-spin mr-2" />
                 <span className="text-sm">Loading history…</span>
               </div>
@@ -138,7 +138,7 @@ export function SessionDetailDrawer({
             )}
 
             {!loading && !error && messages.length === 0 && (
-              <div className="text-center py-12 text-zinc-500 text-sm">
+              <div className="text-center py-12 text-th-text-faint text-sm">
                 No messages found
               </div>
             )}
@@ -158,9 +158,9 @@ export function SessionDetailDrawer({
                   <div
                     className={`max-w-[85%] rounded-lg px-3 py-2 ${
                       isUser
-                        ? "bg-blue-950/40 border border-blue-800/30"
+                        ? "bg-th-accent-bg border border-th-accent-border"
                         : isAssistant
-                        ? "bg-zinc-900 border border-zinc-800"
+                        ? "bg-th-card border border-th-border"
                         : "bg-amber-950/20 border border-amber-900/20"
                     }`}
                   >
@@ -168,7 +168,7 @@ export function SessionDetailDrawer({
                     <div
                       className={`flex items-center gap-1.5 mb-1 text-[10px] font-medium uppercase tracking-wider ${
                         isUser
-                          ? "text-blue-400"
+                          ? "text-th-accent"
                           : isAssistant
                           ? "text-cyan-500"
                           : "text-amber-500"
@@ -182,7 +182,7 @@ export function SessionDetailDrawer({
                       {msg.role || "system"}
                     </div>
                     {/* Content */}
-                    <pre className="text-xs font-mono text-zinc-200/80 whitespace-pre-wrap break-words leading-relaxed">
+                    <pre className="text-xs font-mono text-th-text-secondary whitespace-pre-wrap break-words leading-relaxed">
                       {content}
                     </pre>
                   </div>
@@ -192,15 +192,15 @@ export function SessionDetailDrawer({
 
             {messages.length > 0 && (
               <div className="flex justify-center pt-2">
-                <ChevronDown className="h-3 w-3 text-zinc-700" />
+                <ChevronDown className="h-3 w-3 text-th-icon-muted" />
               </div>
             )}
           </div>
         </ScrollArea>
 
         {/* Footer */}
-        <div className="px-4 py-2 border-t border-zinc-800 bg-zinc-800/30">
-          <span className="text-[10px] text-zinc-500">
+        <div className="px-4 py-2 border-t border-th-border bg-th-panel-header">
+          <span className="text-[10px] text-th-text-faint">
             {messages.length} message{messages.length !== 1 ? "s" : ""} loaded •
             Last 20 messages (no tool calls)
           </span>

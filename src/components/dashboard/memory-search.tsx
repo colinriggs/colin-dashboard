@@ -37,7 +37,6 @@ interface MemorySearchResponse {
 function extractResults(data: unknown): MemoryResult[] {
   if (!data) return [];
   const d = data as MemorySearchResponse;
-  // After callGateway unwrap: data = {results: [...], provider, model}
   if (Array.isArray(d.results)) return d.results;
   if (d.result && Array.isArray(d.result.results)) return d.result.results;
   if (typeof d === "object" && d !== null) {
@@ -79,7 +78,7 @@ function highlightMatch(text: string, query: string): React.ReactNode {
 
   return segments.map((seg, i) =>
     regex.test(seg) ? (
-      <span key={i} className="text-blue-300 bg-blue-800/30 px-0.5 rounded">
+      <span key={i} className="text-th-accent bg-th-accent-bg px-0.5 rounded">
         {seg}
       </span>
     ) : (
@@ -93,10 +92,10 @@ function escapeRegex(str: string): string {
 }
 
 function scoreColor(score?: number): string {
-  if (!score) return "text-zinc-600";
+  if (!score) return "text-th-icon-muted";
   if (score >= 0.8) return "text-emerald-400";
   if (score >= 0.5) return "text-amber-500";
-  return "text-zinc-500";
+  return "text-th-text-faint";
 }
 
 export function MemorySearch() {
@@ -108,7 +107,6 @@ export function MemorySearch() {
   const [expandedIdx, setExpandedIdx] = useState<Set<number>>(new Set());
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Expose the input ref for focus from quick actions
   useEffect(() => {
     const handler = () => inputRef.current?.focus();
     window.addEventListener("memory-search-focus", handler);
@@ -169,27 +167,27 @@ export function MemorySearch() {
   };
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-lg border border-th-border bg-th-card overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-th-panel-header border-b border-th-border">
         <div className="flex items-center gap-2">
           <Database className="h-4 w-4 text-violet-400" />
-          <span className="text-sm font-semibold text-zinc-200">
+          <span className="text-sm font-semibold text-th-text-secondary">
             Memory Search
           </span>
         </div>
         {searched && (
-          <span className="text-[10px] font-mono text-zinc-500">
+          <span className="text-[10px] font-mono text-th-text-faint">
             {results.length} result{results.length !== 1 ? "s" : ""}
           </span>
         )}
       </div>
 
       {/* Search Input */}
-      <div className="px-4 py-3 border-b border-zinc-800">
+      <div className="px-4 py-3 border-b border-th-border">
         <div className="flex items-center gap-2">
           <div className="flex-1 relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-th-text-faint" />
             <input
               ref={inputRef}
               type="text"
@@ -197,12 +195,12 @@ export function MemorySearch() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 pl-8 text-xs font-mono text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors"
+              className="w-full bg-th-input-bg border border-th-input-border rounded px-3 py-2 pl-8 text-xs font-mono text-th-text-secondary placeholder:text-th-text-faint focus:outline-none focus:border-th-text-muted transition-colors"
             />
             {query && (
               <button
                 onClick={clearSearch}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-th-text-faint hover:text-th-text-secondary transition-colors"
               >
                 <X className="h-3 w-3" />
               </button>
@@ -211,7 +209,7 @@ export function MemorySearch() {
           <button
             onClick={handleSearch}
             disabled={!query.trim() || loading}
-            className="px-3 py-2 bg-blue-600/20 border border-blue-500/30 rounded text-xs font-medium text-blue-400 hover:bg-blue-600/30 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
+            className="px-3 py-2 bg-th-accent-bg border border-th-accent-border rounded text-xs font-medium text-th-accent hover:bg-th-accent/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
           >
             {loading ? (
               <Loader2 className="h-3 w-3 animate-spin" />
@@ -227,7 +225,7 @@ export function MemorySearch() {
       <ScrollArea className="h-[300px]">
         <div className="p-3 space-y-2">
           {loading && (
-            <div className="flex items-center justify-center py-12 text-zinc-500">
+            <div className="flex items-center justify-center py-12 text-th-text-faint">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
               <span className="text-sm">Searching…</span>
             </div>
@@ -240,13 +238,13 @@ export function MemorySearch() {
           )}
 
           {!loading && searched && results.length === 0 && !error && (
-            <div className="text-center py-8 text-zinc-500 text-sm">
+            <div className="text-center py-8 text-th-text-faint text-sm">
               No results found
             </div>
           )}
 
           {!searched && !loading && (
-            <div className="text-center py-8 text-zinc-600 text-sm">
+            <div className="text-center py-8 text-th-icon-muted text-sm">
               Enter a query to search memory stores
             </div>
           )}
@@ -259,7 +257,7 @@ export function MemorySearch() {
             return (
               <div
                 key={idx}
-                className="rounded-md bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all cursor-pointer"
+                className="rounded-md bg-th-card border border-th-border hover:border-th-text-faint transition-all cursor-pointer"
                 onClick={() => toggleExpand(idx)}
               >
                 <div className="px-3 py-2.5">
@@ -267,12 +265,12 @@ export function MemorySearch() {
                   <div className="flex items-center justify-between gap-2 mb-1.5">
                     <div className="flex items-center gap-1.5 min-w-0">
                       {isExpanded ? (
-                        <ChevronDown className="h-3 w-3 text-zinc-500 shrink-0" />
+                        <ChevronDown className="h-3 w-3 text-th-text-faint shrink-0" />
                       ) : (
-                        <ChevronRight className="h-3 w-3 text-zinc-500 shrink-0" />
+                        <ChevronRight className="h-3 w-3 text-th-text-faint shrink-0" />
                       )}
                       <FileText className="h-3 w-3 text-violet-500/60 shrink-0" />
-                      <span className="text-[11px] font-mono text-zinc-300 truncate">
+                      <span className="text-[11px] font-mono text-th-text-secondary truncate">
                         {result.path || "unknown"}
                       </span>
                     </div>
@@ -290,7 +288,7 @@ export function MemorySearch() {
                   {/* Text snippet */}
                   {text && (
                     <pre
-                      className={`text-[11px] font-mono text-zinc-400 whitespace-pre-wrap break-words leading-relaxed ${
+                      className={`text-[11px] font-mono text-th-text-muted whitespace-pre-wrap break-words leading-relaxed ${
                         isExpanded ? "" : "line-clamp-4"
                       }`}
                     >
@@ -299,11 +297,11 @@ export function MemorySearch() {
                   )}
 
                   {/* Meta */}
-                  <div className="flex items-center gap-3 mt-1.5 text-[10px] font-mono text-zinc-600">
+                  <div className="flex items-center gap-3 mt-1.5 text-[10px] font-mono text-th-icon-muted">
                     {result.from && <span>store: {result.from}</span>}
                     {linesDisplay && <span>lines: {linesDisplay}</span>}
                     {text && !isExpanded && text.split("\n").length > 4 && (
-                      <span className="text-blue-400/70">click to expand</span>
+                      <span className="text-th-accent/70">click to expand</span>
                     )}
                   </div>
                 </div>

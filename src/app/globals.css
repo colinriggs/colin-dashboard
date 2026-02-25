@@ -45,9 +45,37 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Custom theme-aware colors */
+  --color-th-bg: var(--th-bg);
+  --color-th-bg-secondary: var(--th-bg-secondary);
+  --color-th-card: var(--th-card);
+  --color-th-card-hover: var(--th-card-hover);
+  --color-th-border: var(--th-border);
+  --color-th-border-subtle: var(--th-border-subtle);
+  --color-th-text: var(--th-text);
+  --color-th-text-secondary: var(--th-text-secondary);
+  --color-th-text-muted: var(--th-text-muted);
+  --color-th-text-faint: var(--th-text-faint);
+  --color-th-accent: var(--th-accent);
+  --color-th-accent-muted: var(--th-accent-muted);
+  --color-th-accent-bg: var(--th-accent-bg);
+  --color-th-accent-border: var(--th-accent-border);
+  --color-th-panel-header: var(--th-panel-header);
+  --color-th-input-bg: var(--th-input-bg);
+  --color-th-input-border: var(--th-input-border);
+  --color-th-hover: var(--th-hover);
+  --color-th-icon-muted: var(--th-icon-muted);
+  --color-th-scrollbar: var(--th-scrollbar);
+  --color-th-scrollbar-hover: var(--th-scrollbar-hover);
+  --color-th-divider: var(--th-divider);
 }
 
-:root {
+/* ========================================
+   MIDNIGHT THEME (default — dark zinc/blue)
+   ======================================== */
+:root,
+[data-theme="midnight"] {
   --radius: 0.625rem;
   --background: #09090b;
   --foreground: #e4e4e7;
@@ -80,6 +108,210 @@
   --sidebar-accent-foreground: #e4e4e7;
   --sidebar-border: rgba(63, 63, 70, 0.4);
   --sidebar-ring: rgba(59, 130, 246, 0.3);
+
+  /* Theme semantic tokens */
+  --th-bg: #09090b;
+  --th-bg-secondary: rgba(9, 9, 11, 0.9);
+  --th-card: rgba(24, 24, 27, 0.5);
+  --th-card-hover: rgba(39, 39, 42, 0.5);
+  --th-border: #27272a;
+  --th-border-subtle: rgba(63, 63, 70, 0.3);
+  --th-text: #fafafa;
+  --th-text-secondary: #e4e4e7;
+  --th-text-muted: #a1a1aa;
+  --th-text-faint: #71717a;
+  --th-accent: #3b82f6;
+  --th-accent-muted: rgba(59, 130, 246, 0.7);
+  --th-accent-bg: rgba(59, 130, 246, 0.1);
+  --th-accent-border: rgba(59, 130, 246, 0.3);
+  --th-panel-header: rgba(39, 39, 42, 0.5);
+  --th-input-bg: #09090b;
+  --th-input-border: #27272a;
+  --th-hover: rgba(39, 39, 42, 0.5);
+  --th-icon-muted: #52525b;
+  --th-scrollbar: rgba(113, 113, 122, 0.25);
+  --th-scrollbar-hover: rgba(113, 113, 122, 0.4);
+  --th-divider: #27272a;
+}
+
+/* ========================================
+   EMBER THEME (dark stone/amber)
+   ======================================== */
+[data-theme="ember"] {
+  --background: #0c0a09;
+  --foreground: #e7e5e4;
+  --card: #1c1917;
+  --card-foreground: #e7e5e4;
+  --popover: #1c1917;
+  --popover-foreground: #e7e5e4;
+  --primary: #f59e0b;
+  --primary-foreground: #0c0a09;
+  --secondary: #292524;
+  --secondary-foreground: #d6d3d1;
+  --muted: #292524;
+  --muted-foreground: #a8a29e;
+  --accent: #292524;
+  --accent-foreground: #e7e5e4;
+  --destructive: #ef4444;
+  --border: rgba(68, 64, 60, 0.5);
+  --input: rgba(68, 64, 60, 0.6);
+  --ring: rgba(245, 158, 11, 0.3);
+  --chart-1: #f59e0b;
+  --chart-2: #ef4444;
+  --chart-3: #3b82f6;
+  --chart-4: #8b5cf6;
+  --chart-5: #06b6d4;
+  --sidebar: #0c0a09;
+  --sidebar-foreground: #e7e5e4;
+  --sidebar-primary: #f59e0b;
+  --sidebar-primary-foreground: #0c0a09;
+  --sidebar-accent: #292524;
+  --sidebar-accent-foreground: #e7e5e4;
+  --sidebar-border: rgba(68, 64, 60, 0.4);
+  --sidebar-ring: rgba(245, 158, 11, 0.3);
+
+  --th-bg: #0c0a09;
+  --th-bg-secondary: rgba(12, 10, 9, 0.9);
+  --th-card: rgba(28, 25, 23, 0.5);
+  --th-card-hover: rgba(41, 37, 36, 0.5);
+  --th-border: #292524;
+  --th-border-subtle: rgba(68, 64, 60, 0.3);
+  --th-text: #fafaf9;
+  --th-text-secondary: #e7e5e4;
+  --th-text-muted: #a8a29e;
+  --th-text-faint: #78716c;
+  --th-accent: #f59e0b;
+  --th-accent-muted: rgba(245, 158, 11, 0.7);
+  --th-accent-bg: rgba(245, 158, 11, 0.1);
+  --th-accent-border: rgba(245, 158, 11, 0.3);
+  --th-panel-header: rgba(41, 37, 36, 0.5);
+  --th-input-bg: #0c0a09;
+  --th-input-border: #292524;
+  --th-hover: rgba(41, 37, 36, 0.5);
+  --th-icon-muted: #57534e;
+  --th-scrollbar: rgba(120, 113, 108, 0.25);
+  --th-scrollbar-hover: rgba(120, 113, 108, 0.4);
+  --th-divider: #292524;
+}
+
+/* ========================================
+   FOREST THEME (dark emerald/green)
+   ======================================== */
+[data-theme="forest"] {
+  --background: #0a0f0d;
+  --foreground: #ecfdf5;
+  --card: #111a16;
+  --card-foreground: #ecfdf5;
+  --popover: #111a16;
+  --popover-foreground: #ecfdf5;
+  --primary: #10b981;
+  --primary-foreground: #022c22;
+  --secondary: #1a2e26;
+  --secondary-foreground: #d1fae5;
+  --muted: #1a2e26;
+  --muted-foreground: #6ee7b7;
+  --accent: #1a2e26;
+  --accent-foreground: #ecfdf5;
+  --destructive: #ef4444;
+  --border: rgba(6, 78, 59, 0.5);
+  --input: rgba(6, 78, 59, 0.6);
+  --ring: rgba(16, 185, 129, 0.3);
+  --chart-1: #10b981;
+  --chart-2: #f59e0b;
+  --chart-3: #ef4444;
+  --chart-4: #8b5cf6;
+  --chart-5: #06b6d4;
+  --sidebar: #0a0f0d;
+  --sidebar-foreground: #ecfdf5;
+  --sidebar-primary: #10b981;
+  --sidebar-primary-foreground: #022c22;
+  --sidebar-accent: #1a2e26;
+  --sidebar-accent-foreground: #ecfdf5;
+  --sidebar-border: rgba(6, 78, 59, 0.4);
+  --sidebar-ring: rgba(16, 185, 129, 0.3);
+
+  --th-bg: #0a0f0d;
+  --th-bg-secondary: rgba(10, 15, 13, 0.9);
+  --th-card: rgba(17, 26, 22, 0.5);
+  --th-card-hover: rgba(26, 46, 38, 0.5);
+  --th-border: #14332a;
+  --th-border-subtle: rgba(6, 78, 59, 0.3);
+  --th-text: #ecfdf5;
+  --th-text-secondary: #d1fae5;
+  --th-text-muted: #6ee7b7;
+  --th-text-faint: #34d399;
+  --th-accent: #10b981;
+  --th-accent-muted: rgba(16, 185, 129, 0.7);
+  --th-accent-bg: rgba(16, 185, 129, 0.1);
+  --th-accent-border: rgba(16, 185, 129, 0.3);
+  --th-panel-header: rgba(26, 46, 38, 0.5);
+  --th-input-bg: #0a0f0d;
+  --th-input-border: #14332a;
+  --th-hover: rgba(26, 46, 38, 0.5);
+  --th-icon-muted: #065f46;
+  --th-scrollbar: rgba(52, 211, 153, 0.15);
+  --th-scrollbar-hover: rgba(52, 211, 153, 0.3);
+  --th-divider: #14332a;
+}
+
+/* ========================================
+   ARCTIC THEME (light slate/sky)
+   ======================================== */
+[data-theme="arctic"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0ea5e9;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #334155;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: rgba(14, 165, 233, 0.3);
+  --chart-1: #0ea5e9;
+  --chart-2: #f59e0b;
+  --chart-3: #ef4444;
+  --chart-4: #8b5cf6;
+  --chart-5: #06b6d4;
+  --sidebar: #f8fafc;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: rgba(14, 165, 233, 0.3);
+
+  --th-bg: #f8fafc;
+  --th-bg-secondary: rgba(248, 250, 252, 0.95);
+  --th-card: rgba(255, 255, 255, 0.7);
+  --th-card-hover: rgba(241, 245, 249, 0.7);
+  --th-border: #e2e8f0;
+  --th-border-subtle: rgba(148, 163, 184, 0.2);
+  --th-text: #0f172a;
+  --th-text-secondary: #1e293b;
+  --th-text-muted: #64748b;
+  --th-text-faint: #94a3b8;
+  --th-accent: #0ea5e9;
+  --th-accent-muted: rgba(14, 165, 233, 0.7);
+  --th-accent-bg: rgba(14, 165, 233, 0.08);
+  --th-accent-border: rgba(14, 165, 233, 0.25);
+  --th-panel-header: rgba(241, 245, 249, 0.7);
+  --th-input-bg: #ffffff;
+  --th-input-border: #e2e8f0;
+  --th-hover: rgba(241, 245, 249, 0.7);
+  --th-icon-muted: #94a3b8;
+  --th-scrollbar: rgba(148, 163, 184, 0.25);
+  --th-scrollbar-hover: rgba(148, 163, 184, 0.4);
+  --th-divider: #e2e8f0;
 }
 
 @layer base {
@@ -110,7 +342,7 @@
   animation: blink 1s step-end infinite;
 }
 
-/* Scrollbar styling */
+/* Scrollbar styling - theme aware */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -121,10 +353,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(113, 113, 122, 0.25);
+  background: var(--th-scrollbar);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(113, 113, 122, 0.4);
+  background: var(--th-scrollbar-hover);
 }

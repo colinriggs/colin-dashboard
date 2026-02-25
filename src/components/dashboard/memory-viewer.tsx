@@ -82,18 +82,18 @@ export function MemoryViewer() {
   };
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-lg border border-th-border bg-th-card overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-th-panel-header border-b border-th-border">
         <div className="flex items-center gap-2">
           <Brain className="h-4 w-4 text-purple-400" />
-          <span className="text-sm font-semibold text-zinc-200">
+          <span className="text-sm font-semibold text-th-text-secondary">
             Memory Files
           </span>
         </div>
         <button
           onClick={handleRefresh}
-          className="text-zinc-500 hover:text-zinc-300 transition-colors"
+          className="text-th-text-faint hover:text-th-text-secondary transition-colors"
         >
           <RefreshCw
             className={`h-3.5 w-3.5 ${
@@ -104,7 +104,7 @@ export function MemoryViewer() {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-zinc-800">
+      <div className="flex border-b border-th-border">
         {MEMORY_FILES.map((file) => {
           const Icon = file.icon;
           return (
@@ -113,8 +113,8 @@ export function MemoryViewer() {
               onClick={() => setActiveTab(file.id)}
               className={`flex items-center gap-1.5 px-3 py-2 text-[11px] font-medium uppercase tracking-wider transition-colors border-b-2 ${
                 activeTab === file.id
-                  ? "border-blue-500 text-zinc-200 bg-zinc-800/30"
-                  : "border-transparent text-zinc-500 hover:text-zinc-300"
+                  ? "border-th-accent text-th-text-secondary bg-th-hover"
+                  : "border-transparent text-th-text-faint hover:text-th-text-secondary"
               }`}
             >
               <Icon className="h-3 w-3" />
@@ -128,7 +128,7 @@ export function MemoryViewer() {
       <ScrollArea className="h-[350px]">
         <div className="p-4">
           {loading[activeTab] && !contents[activeTab] && (
-            <div className="flex items-center justify-center py-12 text-zinc-500">
+            <div className="flex items-center justify-center py-12 text-th-text-faint">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
               <span className="text-sm">Loading…</span>
             </div>
@@ -141,7 +141,7 @@ export function MemoryViewer() {
           )}
 
           {contents[activeTab] && (
-            <pre className="text-xs font-mono text-zinc-300/80 whitespace-pre-wrap break-words leading-relaxed">
+            <pre className="text-xs font-mono text-th-text-muted whitespace-pre-wrap break-words leading-relaxed">
               {contents[activeTab]}
             </pre>
           )}

@@ -88,17 +88,17 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
   }, [onRefreshAll]);
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-visible">
+    <div className="rounded-lg border border-th-border bg-th-card overflow-visible">
       <div className="flex items-center gap-2 px-4 py-2.5">
         {/* Label */}
         <div className="flex items-center gap-1.5 mr-2">
-          <Terminal className="h-3.5 w-3.5 text-zinc-500" />
-          <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">
+          <Terminal className="h-3.5 w-3.5 text-th-text-faint" />
+          <span className="text-[11px] font-semibold text-th-text-muted uppercase tracking-wider">
             Quick Actions
           </span>
         </div>
 
-        <div className="h-4 w-px bg-zinc-800 mx-1" />
+        <div className="h-4 w-px bg-th-divider mx-1" />
 
         {/* Run Cron Dropdown */}
         <div className="relative" ref={dropdownRef}>
@@ -116,15 +116,15 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
           </button>
 
           {cronDropdownOpen && (
-            <div className="absolute top-full left-0 mt-1 w-72 bg-zinc-900 border border-zinc-800 rounded-lg shadow-xl shadow-black/40 z-50 overflow-hidden">
-              <div className="px-3 py-2 bg-zinc-800/50 border-b border-zinc-800">
-                <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
+            <div className="absolute top-full left-0 mt-1 w-72 bg-th-input-bg border border-th-border rounded-lg shadow-xl shadow-black/40 z-50 overflow-hidden">
+              <div className="px-3 py-2 bg-th-panel-header border-b border-th-border">
+                <span className="text-[10px] font-medium text-th-text-muted uppercase tracking-wider">
                   Select Job to Run
                 </span>
               </div>
               <div className="max-h-48 overflow-y-auto">
                 {jobs.length === 0 && (
-                  <div className="px-3 py-4 text-center text-zinc-500 text-[11px]">
+                  <div className="px-3 py-4 text-center text-th-text-faint text-[11px]">
                     No cron jobs found
                   </div>
                 )}
@@ -136,20 +136,20 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
                       key={id || idx}
                       onClick={() => handleRunCron(id)}
                       disabled={isRunning}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-zinc-800/50 transition-colors border-b border-zinc-800/50 last:border-b-0 disabled:opacity-50"
+                      className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-th-hover transition-colors border-b border-th-border/50 last:border-b-0 disabled:opacity-50"
                     >
                       {isRunning ? (
                         <Loader2 className="h-3 w-3 animate-spin text-amber-500 shrink-0" />
                       ) : (
-                        <Play className="h-3 w-3 text-zinc-500 shrink-0" />
+                        <Play className="h-3 w-3 text-th-text-faint shrink-0" />
                       )}
                       <div className="min-w-0 flex-1">
-                        <span className="text-[11px] text-zinc-300 block truncate">
+                        <span className="text-[11px] text-th-text-secondary block truncate">
                           {job.name || job.text?.slice(0, 40) || id}
                         </span>
                       </div>
                       {!job.enabled && (
-                        <span className="text-[9px] font-mono text-zinc-600 shrink-0">
+                        <span className="text-[9px] font-mono text-th-icon-muted shrink-0">
                           OFF
                         </span>
                       )}
@@ -173,7 +173,7 @@ export function QuickActions({ onRefreshAll }: QuickActionsProps) {
         {/* Refresh All */}
         <button
           onClick={handleRefreshAll}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800/50 border border-zinc-700/30 rounded text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:border-zinc-600/40 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-th-panel-header border border-th-border-subtle rounded text-xs font-medium text-th-text-secondary hover:bg-th-hover hover:border-th-text-faint transition-colors"
         >
           <RefreshCw className="h-3 w-3" />
           Refresh All

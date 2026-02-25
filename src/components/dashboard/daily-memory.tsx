@@ -63,18 +63,18 @@ export function DailyMemory() {
   const isToday = currentDate === formatDate(new Date());
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-lg border border-th-border bg-th-card overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-th-panel-header border-b border-th-border">
         <div className="flex items-center gap-2">
           <NotebookPen className="h-4 w-4 text-cyan-400" />
-          <span className="text-sm font-semibold text-zinc-200">
+          <span className="text-sm font-semibold text-th-text-secondary">
             Daily Log
           </span>
         </div>
         <button
           onClick={() => loadDay(currentDate)}
-          className="text-zinc-500 hover:text-zinc-300 transition-colors"
+          className="text-th-text-faint hover:text-th-text-secondary transition-colors"
         >
           <RefreshCw
             className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`}
@@ -83,19 +83,19 @@ export function DailyMemory() {
       </div>
 
       {/* Date Navigation */}
-      <div className="flex items-center justify-between px-4 py-2 bg-zinc-800/20 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-2 bg-th-hover border-b border-th-border">
         <button
           onClick={() => goDay(-1)}
-          className="text-zinc-500 hover:text-zinc-300 transition-colors p-1"
+          className="text-th-text-faint hover:text-th-text-secondary transition-colors p-1"
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
         <div className="text-center">
-          <span className="text-xs font-mono text-zinc-300">
+          <span className="text-xs font-mono text-th-text-secondary">
             {displayDate(currentDate)}
           </span>
           {isToday && (
-            <span className="ml-2 text-[10px] text-zinc-500">
+            <span className="ml-2 text-[10px] text-th-text-faint">
               (today)
             </span>
           )}
@@ -103,7 +103,7 @@ export function DailyMemory() {
         <button
           onClick={() => goDay(1)}
           disabled={isToday}
-          className="text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors p-1"
+          className="text-th-text-faint hover:text-th-text-secondary disabled:text-th-icon-muted disabled:cursor-not-allowed transition-colors p-1"
         >
           <ChevronRight className="h-4 w-4" />
         </button>
@@ -113,7 +113,7 @@ export function DailyMemory() {
       <ScrollArea className="h-[280px]">
         <div className="p-4">
           {loading && (
-            <div className="flex items-center justify-center py-12 text-zinc-500">
+            <div className="flex items-center justify-center py-12 text-th-text-faint">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
               <span className="text-sm">Loading…</span>
             </div>
@@ -126,13 +126,13 @@ export function DailyMemory() {
           )}
 
           {!loading && !error && !content && (
-            <div className="text-center py-8 text-zinc-500 text-sm">
+            <div className="text-center py-8 text-th-text-faint text-sm">
               No log for {currentDate}
             </div>
           )}
 
           {!loading && content && (
-            <pre className="text-xs font-mono text-zinc-300/80 whitespace-pre-wrap break-words leading-relaxed">
+            <pre className="text-xs font-mono text-th-text-muted whitespace-pre-wrap break-words leading-relaxed">
               {content}
             </pre>
           )}

@@ -92,18 +92,18 @@ function getKindIcon(kind?: string) {
 }
 
 function getStatusColor(status?: string): string {
-  if (!status) return "text-zinc-500";
+  if (!status) return "text-th-text-faint";
   if (status === "active" || status === "running") return "text-emerald-400";
-  if (status === "completed" || status === "done") return "text-zinc-500";
+  if (status === "completed" || status === "done") return "text-th-text-faint";
   if (status === "aborted" || status === "error" || status === "failed")
     return "text-red-400";
   return "text-amber-400";
 }
 
 function getStatusDot(status?: string): string {
-  if (!status) return "bg-zinc-600";
+  if (!status) return "bg-th-icon-muted";
   if (status === "active" || status === "running") return "bg-emerald-400";
-  if (status === "completed" || status === "done") return "bg-zinc-600";
+  if (status === "completed" || status === "done") return "bg-th-icon-muted";
   if (status === "aborted" || status === "error" || status === "failed")
     return "bg-red-400";
   return "bg-amber-400";
@@ -151,12 +151,12 @@ export function SessionsPanel() {
   ).length;
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+    <div className="rounded-lg border border-th-border bg-th-card overflow-hidden">
       {/* Panel Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-th-panel-header border-b border-th-border">
         <div className="flex items-center gap-2">
           <CircleDot className="h-4 w-4 text-emerald-500" />
-          <span className="text-sm font-semibold text-zinc-200">
+          <span className="text-sm font-semibold text-th-text-secondary">
             Active Sessions
           </span>
           {activeCount > 0 && (
@@ -167,13 +167,13 @@ export function SessionsPanel() {
         </div>
         <div className="flex items-center gap-3">
           {lastUpdated && (
-            <span className="text-[10px] text-zinc-500 font-mono">
+            <span className="text-[10px] text-th-text-faint font-mono">
               {lastUpdated.toLocaleTimeString()}
             </span>
           )}
           <button
             onClick={refresh}
-            className="text-zinc-500 hover:text-zinc-300 transition-colors"
+            className="text-th-text-faint hover:text-th-text-secondary transition-colors"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
           </button>
@@ -184,7 +184,7 @@ export function SessionsPanel() {
       <ScrollArea className="h-[400px]">
         <div className="p-3 space-y-1.5">
           {loading && sessions.length === 0 && (
-            <div className="flex items-center justify-center py-12 text-zinc-500">
+            <div className="flex items-center justify-center py-12 text-th-text-faint">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
               <span className="text-sm">Loading sessions…</span>
             </div>
@@ -197,7 +197,7 @@ export function SessionsPanel() {
           )}
 
           {sessions.length === 0 && !loading && !error && (
-            <div className="text-center py-8 text-zinc-500 text-sm">
+            <div className="text-center py-8 text-th-text-faint text-sm">
               No active sessions
             </div>
           )}
@@ -209,7 +209,7 @@ export function SessionsPanel() {
                 const key = session.key || session.label;
                 if (key) setSelectedSession(key);
               }}
-              className="group px-3 py-2.5 rounded-md bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/50 transition-all cursor-pointer"
+              className="group px-3 py-2.5 rounded-md bg-th-card border border-th-border hover:border-th-text-faint hover:bg-th-card-hover transition-all cursor-pointer"
             >
               <div className="flex items-center gap-2 mb-1">
                 {/* Status dot */}
@@ -224,12 +224,12 @@ export function SessionsPanel() {
                 />
 
                 {/* Session key */}
-                <span className="text-sm font-mono text-zinc-200 font-medium truncate flex-1">
+                <span className="text-sm font-mono text-th-text-secondary font-medium truncate flex-1">
                   {session.key || session.label || `Session ${idx + 1}`}
                 </span>
 
                 {/* Kind badge */}
-                <div className="flex items-center gap-1 text-zinc-500">
+                <div className="flex items-center gap-1 text-th-text-faint">
                   {getKindIcon(session.kind)}
                   <span className="text-[10px] font-mono uppercase">
                     {session.kind || "unknown"}
@@ -238,9 +238,9 @@ export function SessionsPanel() {
               </div>
 
               {/* Details row */}
-              <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-500 ml-4">
+              <div className="flex items-center gap-3 text-[11px] font-mono text-th-text-faint ml-4">
                 {session.model && (
-                  <span className="text-zinc-400/60">{session.model}</span>
+                  <span className="text-th-text-muted/60">{session.model}</span>
                 )}
                 {(session.inputTokens || session.totalTokens) && (
                   <span>
@@ -260,7 +260,7 @@ export function SessionsPanel() {
 
               {/* Last message preview */}
               {session.messages && session.messages.length > 0 && (
-                <div className="mt-1.5 ml-4 text-[11px] text-zinc-500 font-mono truncate">
+                <div className="mt-1.5 ml-4 text-[11px] text-th-text-faint font-mono truncate">
                   › {getLastMessage(session)}
                 </div>
               )}
